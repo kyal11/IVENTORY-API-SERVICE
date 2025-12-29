@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${INVENTORY_USER}
+      POSTGRES_PASSWORD: ${INVENTORY_PASSWORD}
+      POSTGRES_DB: ${INVENTORY_DB}
+    ports:
+      - "${DB_PORT}:5432"
+    container_name: db-inventory-data
+    volumes:
+      - db-inventory-data:/var/lib/postgresql/data
+
+volumes:
+  db-inventory-data:
