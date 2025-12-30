@@ -1,5 +1,6 @@
 package com.task.entity;
 
+import com.task.constant.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;

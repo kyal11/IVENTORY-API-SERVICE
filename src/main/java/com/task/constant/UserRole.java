@@ -1,4 +1,4 @@
-package com.task.entity;
+package com.task.constant;
 
 public enum UserRole {
     SUPER_ADMIN,
