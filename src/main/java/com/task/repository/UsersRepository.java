@@ -35,10 +35,5 @@ public interface UsersRepository extends JpaRepository<Users, UUID> {
     @Query("UPDATE Users u SET u.deletedAt = CURRENT_TIMESTAMP WHERE u.id = :id")
     void softDeleteById(UUID id);
 
-    @Modifying
-    @Transactional
-    @Query("UPDATE Users u SET u.active = false WHERE u.id = :id")
-    void inactiveUsersById(UUID id);
-
     Users save(Users user);
 }

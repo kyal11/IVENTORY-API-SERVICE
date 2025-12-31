@@ -15,8 +15,7 @@ import java.util.UUID;
 @Table(
         name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "email"),
-                @UniqueConstraint(columnNames = "username")
+                @UniqueConstraint(columnNames = "email")
         }
 )
 public class Users {
@@ -27,7 +26,7 @@ public class Users {
     private UUID id;
 
     @Column(nullable = false)
-    private String username;
+    private String name;
 
     @Column(nullable = false)
     private String email;
@@ -38,9 +37,6 @@ public class Users {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
-
-    @Column(nullable = false)
-    private Boolean active = true;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;

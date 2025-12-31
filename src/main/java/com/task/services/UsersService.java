@@ -1,8 +1,11 @@
 package com.task.services;
 
 import com.task.dto.ApiResponse;
+import com.task.dto.user.CreateUserReq;
+import com.task.dto.user.UpdateUserReq;
 import com.task.dto.user.UserRes;
 import com.task.entity.Users;
+import com.task.exception.BadRequestException;
 import com.task.exception.NotFoundException;
 import com.task.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,9 +30,8 @@ public class UsersService {
     private UserRes toUserRes(Users user) {
         UserRes res = new UserRes();
         res.setId(user.getId());
-        res.setUsername(user.getUsername());
+        res.setName(user.getName());
         res.setEmail(user.getEmail());
-        res.setActive(user.getActive());
         res.setCreatedAt(user.getCreatedAt());
         res.setUpdatedAt(user.getUpdatedAt());
 
@@ -49,10 +54,62 @@ public class UsersService {
         return ApiResponse.success("Get user by ID successfully", toUserRes(user));
     }
 
+    public ApiResponse<UserRes> getByUsername(String username) {
+        Users user = usersRepository.findByUsername(username)
+                .filter(u -> u.getDeletedAt() == null)
+                .orElseThrow(() -> new NotFoundException("User " + username + " not found"));
+        return ApiResponse.success("Get user by username successfully", toUserRes(user));
+    }
+
     public ApiResponse<UserRes> getByEmail(String email) {
         Users user = usersRepository.findByEmail(email)
                 .filter(u -> u.getDeletedAt() == null)
                 .orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
         return ApiResponse.success("Get user by email successfully", toUserRes(user));
+    }
+
+    @Transactional
+    public ApiResponse<UserRes> create(CreateUserReq dto) {
+        if (usersRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new BadRequestException("Email already exists");
+        }
+        Users user = new Users();
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setRole(dto.getUserRole());
+        user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
+
+        Users savedUser = usersRepository.save(user);
+        return ApiResponse.success("Create user successfully", toUserRes(savedUser));
+    }
+
+    @Transactional
+    public ApiResponse<UserRes> update(UUID id, UpdateUserReq dto) {
+        Users userToUpdate = usersRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
+
+        if (dto.getPassword() != null) {
+            userToUpdate.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        }
+        userToUpdate.setName(dto.getName());
+        userToUpdate.setEmail(dto.getEmail());
+        userToUpdate.setRole(dto.getUserRole());
+        userToUpdate.setUpdatedAt(LocalDateTime.now());
+
+
+        Users updatedUser = usersRepository.save(userToUpdate);
+        return ApiResponse.success("Update user successfully", toUserRes(updatedUser));
+    }
+
+    @Transactional
+    public ApiResponse<String> softDelete(UUID id) {
+        Users user = usersRepository.findById(id)
+                .filter(u -> u.getDeletedAt() == null)
+                .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
+        usersRepository.softDeleteById(id);
+
+        return ApiResponse.success("Delete user successfully!");
     }
 }
