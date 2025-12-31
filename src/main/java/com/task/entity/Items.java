@@ -26,6 +26,7 @@ public class Items {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
+
     @Column(name = "code_product", nullable = false, unique = true)
     private String codeProduct;
 

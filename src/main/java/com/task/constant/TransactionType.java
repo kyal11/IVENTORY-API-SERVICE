@@ -1,7 +1,7 @@
 package com.task.constant;
 
 public enum TransactionType {
-    ASSIGN,
+    INITIAL_ASSIGN,
     BORROW,
     RETURN,
     TRANSFER

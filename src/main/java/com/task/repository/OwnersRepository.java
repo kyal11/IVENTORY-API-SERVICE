@@ -17,15 +17,18 @@ public interface OwnersRepository extends JpaRepository<Owners, UUID> {
 
     Optional<Owners> findByCodeOwner(String codeOwner);
 
+    Optional<Owners> findById(UUID id);
+
     Optional<Owners> findByCodeOwnerAndActiveTrue(String codeOwner);
 
     List<Owners> findByNameContainingIgnoreCase(String name);
 
     List<Owners> findByActiveTrue();
 
-    List<Users> findAllOwners();
+    @Query("SELECT o FROM Owners o")
+    List<Owners> findAllOwners();
 
-    Page<Users> findAllUsersPageable(Pageable pageable);
+    Page<Owners> findAllOwnersPageable(Pageable pageable);
 
     boolean existsByCodeOwner(String codeOwner);
 }

@@ -1,22 +1,25 @@
-package com.task.dto.user;
+package com.task.dto.owner;
 
-import com.task.constant.UserRole;
+import com.task.constant.OwnerType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class UserRes {
+public class OwnerRes {
     private UUID id;
 
     private String name;
 
-    private String email;
+    private OwnerType type;
 
-    private UserRole userRole;
+    private String codeOwner;
+
+    private Boolean active;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
 }

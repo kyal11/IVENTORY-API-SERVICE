@@ -2,8 +2,11 @@ package com.task.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +18,6 @@ import java.util.UUID;
         }
 )
 public class ItemOwnerStocks {
-
     @Id
     @UuidGenerator
     @Column(updatable = false, nullable = false)
@@ -30,4 +32,12 @@ public class ItemOwnerStocks {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

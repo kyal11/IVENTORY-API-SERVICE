@@ -44,7 +44,6 @@ public class ItemsLogs {
     @JoinColumn(name = "performed_by_user_id")
     private Users performedBy;
 
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
