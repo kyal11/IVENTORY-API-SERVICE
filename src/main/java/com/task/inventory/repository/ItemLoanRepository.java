@@ -35,7 +35,7 @@ public interface ItemLoanRepository extends JpaRepository<ItemLoan, UUID> {
 
     @Query("""
         SELECT l
-        FROM ItemLoans l
+        FROM ItemLoan l
         JOIN l.item i
         WHERE i.codeProduct = :codeProduct
         ORDER BY l.borrowedAt DESC
@@ -46,7 +46,7 @@ public interface ItemLoanRepository extends JpaRepository<ItemLoan, UUID> {
 
     @Query("""
         SELECT l
-        FROM ItemLoans l
+        FROM ItemLoan l
         JOIN l.item i
         WHERE i.codeProduct = :codeProduct
           AND l.status = 'BORROWED'

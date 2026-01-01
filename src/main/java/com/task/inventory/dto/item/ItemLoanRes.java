@@ -10,7 +10,7 @@ import java.util.UUID;
 public class ItemLoanRes {
     private UUID loanId;
     private String borrowedBy;
-    private String performedBy;
+    private UUID performedBy;
     private LocalDateTime borrowedAt;
     private LocalDateTime returnedAt;
     private LoanStatus status;

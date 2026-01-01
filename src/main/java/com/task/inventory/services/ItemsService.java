@@ -7,14 +7,18 @@ import com.task.inventory.dto.item.ItemRes;
 import com.task.inventory.dto.item.TrackItemRes;
 import com.task.inventory.dto.item.UpdateItemReq;
 import com.task.inventory.dto.itemOwnerStock.AssignItemOwnerReq;
+import com.task.inventory.entity.ItemLoan;
 import com.task.inventory.entity.ItemOwnerStocks;
+import com.task.inventory.entity.ItemTransactions;
 import com.task.inventory.entity.Items;
 import com.task.inventory.exception.BadRequestException;
 import com.task.inventory.exception.NotFoundException;
 import com.task.inventory.mapper.ItemMapper;
+import com.task.inventory.mapper.TrackItemMapper;
 import com.task.inventory.repository.ItemLoanRepository;
 import com.task.inventory.repository.ItemOwnerStocksRepository;
 import com.task.inventory.repository.ItemsRepository;
+import com.task.inventory.repository.ItemsTransactionsRepository;
 import com.task.inventory.services.transaction.ItemTransactionService;
 import com.task.inventory.utils.ItemCodeGenerator;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +28,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,11 +41,12 @@ public class ItemsService {
 
     private final ItemsRepository itemsRepository;
     private final ItemLoanRepository itemLoanRepository;
-    private final ItemTransactionService itemTransactionService;
+    private final ItemsTransactionsRepository itemsTransactionsRepository;
 
     private final ItemOwnerStocksRepository itemOwnerStocksRepository;
     private final ItemCodeGenerator itemCodeGenerator;
     private final ItemMapper mapper;
+    private final TrackItemMapper trackItemMapper;
 
     public ApiResponse<Page<ItemRes>> getAll(Pageable pageable) {
         Page<ItemRes> items = itemsRepository.findAll(pageable)
@@ -72,9 +79,47 @@ public class ItemsService {
     }
 
     public ApiResponse<TrackItemRes> getItemTrack(String codeProduct) {
+        Items item = itemsRepository.findByCodeProduct(codeProduct)
+                .orElseThrow(() ->
+                        new NotFoundException("Item with code " + codeProduct + " not found")
+                );
 
+        String itemCodeProduct = item.getCodeProduct();
+
+        List<ItemLoan> loanHistory =
+                itemLoanRepository.findAllItemLoanHistoryByCodeProduct(itemCodeProduct);
+
+        List<ItemLoan> activeBorrowed =
+                itemLoanRepository.findActiveBorrowedByCodeProduct(itemCodeProduct);
+
+        List<ItemTransactions> transactionHistory =
+                itemsTransactionsRepository.findItemTransactionHistoryByCodeProduct(itemCodeProduct);
+
+        TrackItemRes result = trackItemMapper.toTrackItemRes(
+                item,
+                loanHistory,
+                activeBorrowed,
+                transactionHistory
+        );
+
+        return ApiResponse.success(
+                "Get item tracking data successfully",
+                result
+        );
     }
+    public Page<ItemRes> search(
+            String name, String code, ItemStatus status, Integer minQty,
+            LocalDate startDate, LocalDate endDate, Pageable pageable
+    ) {
+        LocalDateTime startDateTime = (startDate != null) ? startDate.atStartOfDay() : null;
+        LocalDateTime endDateTime = (endDate != null) ? endDate.atTime(LocalTime.MAX) : null;
 
+        Page<Items> items = itemsRepository.searchItems(
+                name, code, status, minQty, startDateTime, endDateTime, pageable
+        );
+
+        return items.map(mapper::toItemRes);
+    }
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public ApiResponse<ItemRes> create(CreateItemReq dto) {
 

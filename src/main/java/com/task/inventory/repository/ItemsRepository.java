@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,4 +38,23 @@ public interface ItemsRepository extends JpaRepository<Items, UUID> {
     List<Items> findByStatusIn(List<ItemStatus> statuses);
 
     Page<Items> findAll(Pageable pageable);
+
+    @Query("""
+        SELECT i FROM Items i
+        WHERE (:name IS NULL OR LOWER(i.name) LIKE LOWER(CONCAT('%', :name, '%')))
+          AND (:code IS NULL OR i.codeProduct = :code)
+          AND (:status IS NULL OR i.status = :status)
+          AND (:minQty IS NULL OR i.totalQuantity >= :minQty)
+          AND (CAST(:startDate AS date) IS NULL OR i.createdAt >= :startDate)
+          AND (CAST(:endDate AS date) IS NULL OR i.createdAt <= :endDate)
+    """)
+    Page<Items> searchItems(
+            @Param("name") String name,
+            @Param("code") String code,
+            @Param("status") ItemStatus status,
+            @Param("minQty") Integer minQty,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate,
+            Pageable pageable
+    );
 }

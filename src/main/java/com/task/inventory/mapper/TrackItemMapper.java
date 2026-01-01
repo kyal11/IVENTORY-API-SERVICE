@@ -48,7 +48,7 @@ public class TrackItemMapper {
     private ItemLoanRes toItemLoanRes(ItemLoan loan) {
         ItemLoanRes res = new ItemLoanRes();
         res.setLoanId(loan.getId());
-        res.setPerformedBy(loan.getBorrowerId().toString());
+        res.setPerformedBy(loan.getBorrowerId());
         res.setBorrowedAt(loan.getBorrowedAt());
         res.setReturnedAt(loan.getReturnedAt());
         res.setStatus(loan.getStatus());
