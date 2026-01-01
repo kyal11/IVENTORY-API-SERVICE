@@ -1,0 +1,57 @@
+package com.task.inventory.repository;
+
+import com.task.inventory.entity.ItemLoan;
+import com.task.inventory.constant.LoanStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
+public interface ItemLoanRepository extends JpaRepository<ItemLoan, UUID> {
+
+    List<ItemLoan> findByItemId(UUID itemId);
+
+    List<ItemLoan> findByBorrowerId(UUID borrowerId);
+
+    List<ItemLoan> findByOwnerId(UUID ownerId);
+
+    List<ItemLoan> findByStatus(LoanStatus status);
+
+    Optional<ItemLoan> findByIdAndStatus(UUID id, LoanStatus status);
+
+    List<ItemLoan> findByItemIdAndStatus(UUID itemId, LoanStatus status);
+
+    List<ItemLoan> findByOwnerIdAndStatus(UUID ownerId, LoanStatus status);
+
+    List<ItemLoan> findByBorrowerIdAndStatus(UUID borrowerId, LoanStatus status);
+
+    boolean existsByItemIdAndStatus(UUID itemId, LoanStatus status);
+
+    @Query("""
+        SELECT COALESCE(SUM(l.quantity), 0)
+        FROM ItemLoan l
+        WHERE l.item.id = :itemId
+          AND l.ownerId = :ownerId
+          AND l.status = 'BORROWED'
+    """)
+    Integer sumBorrowedQuantity(UUID itemId, UUID ownerId);
+
+    List<ItemLoan> findByBorrowedAtBetween(
+            LocalDateTime start,
+            LocalDateTime end
+    );
+
+    @Query("""
+        SELECT l
+        FROM ItemLoan l
+        WHERE l.status = 'BORROWED'
+          AND l.borrowedAt < :threshold
+    """)
+    List<ItemLoan> findOverdueLoans(LocalDateTime threshold);
+}
+
