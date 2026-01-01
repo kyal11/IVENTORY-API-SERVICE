@@ -121,3 +121,4 @@ CREATE INDEX idx_item_loans_owner_id ON item_loans(owner_id);
 CREATE INDEX idx_item_loans_borrower_id ON item_loans(borrower_id);
 CREATE INDEX idx_item_loans_borrowed_at ON item_loans(borrowed_at DESC);
 CREATE INDEX idx_item_loans_returned_at ON item_loans(returned_at) WHERE returned_at IS NOT NULL;
+

@@ -10,6 +10,8 @@ import com.task.inventory.exception.NotFoundException;
 import com.task.inventory.mapper.OwnerMapper;
 import com.task.inventory.repository.OwnersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +26,8 @@ public class OwnerService {
     private final OwnersRepository ownersRepository;
     private final OwnerMapper mapper;
 
-    public ApiResponse<List<OwnerRes>> getAllOwner() {
-        List<OwnerRes> owners = ownersRepository.findAllOwners().stream().map(mapper::toOwnerRes).collect(Collectors.toList());
+    public ApiResponse<Page<OwnerRes>> getAllOwner(Pageable pageable) {
+        Page<OwnerRes> owners = ownersRepository.findAll(pageable).map(mapper::toOwnerRes);
         return ApiResponse.success("Get all users successfully", owners);
     }
 

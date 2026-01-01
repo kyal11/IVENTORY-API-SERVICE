@@ -9,6 +9,7 @@ public class OwnerMapper {
     public OwnerRes toOwnerRes(Owners owners) {
         OwnerRes res = new OwnerRes();
         res.setId(owners.getId());
+        res.setCodeOwner(owners.getCodeOwner());
         res.setName(owners.getName());
         res.setType(owners.getType());
         res.setActive(owners.getActive());

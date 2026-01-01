@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private UsersRepository usersRepository;
-    private JwtService jwtService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UsersRepository usersRepository;
+    private final JwtService jwtService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     public ApiResponse<LoginRes> login(LoginReq dto) {
@@ -31,6 +31,6 @@ public class AuthService {
 
         LoginRes response = new LoginRes(user.getName(), user.getEmail(), token);
 
-        return  ApiResponse.success("Succesfully login!", response);
+        return  ApiResponse.success("Successfully login!", response);
     }
 }

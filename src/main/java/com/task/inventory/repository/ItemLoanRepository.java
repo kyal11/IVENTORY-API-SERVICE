@@ -4,6 +4,7 @@ import com.task.inventory.entity.ItemLoan;
 import com.task.inventory.constant.LoanStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,29 @@ public interface ItemLoanRepository extends JpaRepository<ItemLoan, UUID> {
     List<ItemLoan> findByBorrowerIdAndStatus(UUID borrowerId, LoanStatus status);
 
     boolean existsByItemIdAndStatus(UUID itemId, LoanStatus status);
+
+    @Query("""
+        SELECT l
+        FROM ItemLoans l
+        JOIN l.item i
+        WHERE i.codeProduct = :codeProduct
+        ORDER BY l.borrowedAt DESC
+    """)
+    List<ItemLoan> findAllItemLoanHistoryByCodeProduct(
+            @Param("codeProduct") String codeProduct
+    );
+
+    @Query("""
+        SELECT l
+        FROM ItemLoans l
+        JOIN l.item i
+        WHERE i.codeProduct = :codeProduct
+          AND l.status = 'BORROWED'
+        ORDER BY l.borrowedAt DESC
+    """)
+    List<ItemLoan> findActiveBorrowedByCodeProduct(
+            @Param("codeProduct") String codeProduct
+    );
 
     @Query("""
         SELECT COALESCE(SUM(l.quantity), 0)

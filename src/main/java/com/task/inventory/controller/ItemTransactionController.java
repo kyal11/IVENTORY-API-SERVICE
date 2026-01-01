@@ -81,6 +81,8 @@ public class ItemTransactionController {
             @RequestParam(required = false) TransactionType transactionType,
             @RequestParam(required = false) UUID performedByUserId,
             @RequestParam(required = false) String performedByName,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
             @PageableDefault(size = 10) Pageable pageable
     ) {
         return transactionService.search(
@@ -89,6 +91,8 @@ public class ItemTransactionController {
                 transactionType,
                 performedByUserId,
                 performedByName,
+                startDate,
+                endDate,
                 pageable
         );
     }

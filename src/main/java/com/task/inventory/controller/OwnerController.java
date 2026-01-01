@@ -6,6 +6,9 @@ import com.task.inventory.dto.owner.OwnerRes;
 import com.task.inventory.dto.owner.UpdateOwnerReq;
 import com.task.inventory.services.OwnerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +24,10 @@ public class OwnerController {
 
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<OwnerRes>>> getAllOwner() {
-        return ResponseEntity.ok(ownerService.getAllOwner());
+    public ResponseEntity<ApiResponse<Page<OwnerRes>>> getAllOwner(
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
+        return ResponseEntity.ok(ownerService.getAllOwner(pageable));
     }
 
     @GetMapping("/active")

@@ -40,9 +40,6 @@ public class ReturnProcessor implements  TransactionProcessor{
         if (request.getItemLoanId() == null) {
             throw new BadRequestException("Item loan ID is required for return");
         }
-        Items item = itemsRepository.findById(request.getItemId())
-                .orElseThrow(() -> new NotFoundException("Item not found"));
-
         ItemLoan loan = itemLoanRepository.findByIdAndStatus(request.getItemLoanId(), LoanStatus.BORROWED)
                 .orElseThrow(() -> new NotFoundException("Item loan not found"));
 
@@ -69,6 +66,8 @@ public class ReturnProcessor implements  TransactionProcessor{
         tx.setQuantity(loan.getQuantity());
         tx.setPerformedBy(currentUser);
         tx.setNotes(request.getNotes());
+        tx.setCreatedAt(LocalDateTime.now());
+        tx.setUpdatedAt(LocalDateTime.now());
 
         itemsService.updateItemStatus(loan.getItem().getId());
 

@@ -30,22 +30,11 @@ public class UsersController {
         return ResponseEntity.ok(usersService.getAll(pageable));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<ApiResponse<List<UserRes>>> getAllWithoutPagination() {
-        return ResponseEntity.ok(usersService.getAllWithoutPagination());
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserRes>> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(usersService.getById(id));
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<ApiResponse<UserRes>> getByName(
-            @PathVariable String username
-    ) {
-        return ResponseEntity.ok(usersService.getByName(username));
-    }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<ApiResponse<UserRes>> getByEmail(

@@ -16,6 +16,8 @@ import com.task.inventory.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class TransferProcessor implements  TransactionProcessor{
@@ -104,6 +106,9 @@ public class TransferProcessor implements  TransactionProcessor{
         tx.setQuantity(transferQty);
         tx.setNotes(request.getNotes());
         tx.setPerformedBy(currentUser);
+        tx.setCreatedAt(LocalDateTime.now());
+        tx.setUpdatedAt(LocalDateTime.now());
+
         ItemTransactions savedTx = transactionsRepository.save(tx);
 
         return mapper.toItemTransactionRes(savedTx);

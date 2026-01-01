@@ -4,6 +4,7 @@ import com.task.inventory.constant.ItemStatus;
 import com.task.inventory.dto.ApiResponse;
 import com.task.inventory.dto.item.CreateItemReq;
 import com.task.inventory.dto.item.ItemRes;
+import com.task.inventory.dto.item.TrackItemRes;
 import com.task.inventory.dto.item.UpdateItemReq;
 import com.task.inventory.dto.itemOwnerStock.AssignItemOwnerReq;
 import com.task.inventory.entity.ItemOwnerStocks;
@@ -11,10 +12,14 @@ import com.task.inventory.entity.Items;
 import com.task.inventory.exception.BadRequestException;
 import com.task.inventory.exception.NotFoundException;
 import com.task.inventory.mapper.ItemMapper;
+import com.task.inventory.repository.ItemLoanRepository;
 import com.task.inventory.repository.ItemOwnerStocksRepository;
 import com.task.inventory.repository.ItemsRepository;
+import com.task.inventory.services.transaction.ItemTransactionService;
 import com.task.inventory.utils.ItemCodeGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,15 +34,16 @@ import java.util.stream.Collectors;
 public class ItemsService {
 
     private final ItemsRepository itemsRepository;
+    private final ItemLoanRepository itemLoanRepository;
+    private final ItemTransactionService itemTransactionService;
+
     private final ItemOwnerStocksRepository itemOwnerStocksRepository;
     private final ItemCodeGenerator itemCodeGenerator;
     private final ItemMapper mapper;
 
-    public ApiResponse<List<ItemRes>> getAll() {
-        List<ItemRes> items = itemsRepository.findAll()
-                .stream()
-                .map(mapper::toItemRes)
-                .collect(Collectors.toList());
+    public ApiResponse<Page<ItemRes>> getAll(Pageable pageable) {
+        Page<ItemRes> items = itemsRepository.findAll(pageable)
+                .map(mapper::toItemRes);
 
         return ApiResponse.success("Get all items successfully", items);
     }
@@ -65,13 +71,8 @@ public class ItemsService {
         return ApiResponse.success("Get items by status successfully", items);
     }
 
-    public ApiResponse<List<ItemRes>> searchByName(String name) {
-        List<ItemRes> items = itemsRepository.findByNameContainingIgnoreCase(name)
-                .stream()
-                .map(mapper::toItemRes)
-                .collect(Collectors.toList());
+    public ApiResponse<TrackItemRes> getItemTrack(String codeProduct) {
 
-        return ApiResponse.success("Search items successfully", items);
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
@@ -121,7 +122,6 @@ public class ItemsService {
             stock.setQuantity(assign.getQuantity());
             itemOwnerStocksRepository.save(stock);
         }
-
         return ApiResponse.success(
                 "Create item successfully",
                 mapper.toItemRes(savedItem)
@@ -141,18 +141,6 @@ public class ItemsService {
 
         Items updated = itemsRepository.save(item);
         return ApiResponse.success("Update item successfully", mapper.toItemRes(updated));
-    }
-
-    @Transactional
-    public ApiResponse<String> updateStatus(UUID id, ItemStatus status) {
-        Items item = itemsRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Item with ID " + id + " not found"));
-
-        item.setStatus(status);
-        item.setUpdatedAt(LocalDateTime.now());
-        itemsRepository.save(item);
-
-        return ApiResponse.success("Item status updated successfully");
     }
 
     public void updateItemStatus(UUID itemId) {

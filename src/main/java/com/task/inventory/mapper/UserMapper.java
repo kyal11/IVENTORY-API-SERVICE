@@ -11,6 +11,7 @@ public class UserMapper {
         res.setId(user.getId());
         res.setName(user.getName());
         res.setEmail(user.getEmail());
+        res.setUserRole(user.getRole());
         res.setCreatedAt(user.getCreatedAt());
         res.setUpdatedAt(user.getUpdatedAt());
 

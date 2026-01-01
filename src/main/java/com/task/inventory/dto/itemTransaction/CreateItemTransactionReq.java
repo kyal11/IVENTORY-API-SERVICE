@@ -10,7 +10,6 @@ import java.util.UUID;
 @Data
 public class CreateItemTransactionReq {
 
-    @NotBlank
     private UUID itemId;
 
     private UUID fromOwnerId;
@@ -22,7 +21,6 @@ public class CreateItemTransactionReq {
     @NotBlank
     private TransactionType transactionType;
 
-    @NotBlank
     private Integer quantity;
 
     private String notes;

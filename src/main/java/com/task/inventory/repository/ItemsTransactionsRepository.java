@@ -40,6 +40,16 @@ public interface ItemsTransactionsRepository extends JpaRepository<ItemTransacti
 
     Page<ItemTransactions> findAll(Pageable pageable);
 
+    @Query("""
+        SELECT t
+        FROM ItemTransactions t
+        JOIN t.item i
+        WHERE i.codeProduct = :codeProduct
+        ORDER BY t.createdAt DESC
+    """)
+    List<ItemTransactions> findItemTransactionHistoryByCodeProduct(
+            @Param("codeProduct") String codeProduct
+    );
 
     @Query("""
         SELECT t FROM ItemTransactions t
@@ -50,6 +60,8 @@ public interface ItemsTransactionsRepository extends JpaRepository<ItemTransacti
           AND (:transactionType IS NULL OR t.transactionType = :transactionType)
           AND (:performedByUserId IS NULL OR u.id = :performedByUserId)
           AND (:performedByName IS NULL OR u.name LIKE %:performedByName%)
+          AND (CAST(:startDate AS date) IS NULL OR t.createdAt >= :startDate)
+          AND (CAST(:endDate AS date) IS NULL OR t.createdAt <= :endDate)
     """)
     Page<ItemTransactions> searchTransactions(
             @Param("itemCode") String itemCode,
@@ -57,6 +69,8 @@ public interface ItemsTransactionsRepository extends JpaRepository<ItemTransacti
             @Param("transactionType") TransactionType transactionType,
             @Param("performedByUserId") UUID performedByUserId,
             @Param("performedByName") String performedByName,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate,
             Pageable pageable
     );
 

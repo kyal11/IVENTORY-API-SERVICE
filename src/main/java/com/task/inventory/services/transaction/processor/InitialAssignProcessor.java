@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class InitialAssignProcessor implements TransactionProcessor {
@@ -59,6 +61,8 @@ public class InitialAssignProcessor implements TransactionProcessor {
         tx.setPerformedBy(currentUser);
         tx.setFromOwnerId(null);
         tx.setToOwnerId(null);
+        tx.setCreatedAt(LocalDateTime.now());
+        tx.setUpdatedAt(LocalDateTime.now());
 
         ItemTransactions savedTx = transactionsRepository.save(tx);
         return mapper.toItemTransactionRes(savedTx);

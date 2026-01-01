@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,6 +53,6 @@ public class Items {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
-    private List<ItemOwnerStocks> ownerStocks;
+    private List<ItemOwnerStocks> ownerStocks = new ArrayList<>();;
 
 }

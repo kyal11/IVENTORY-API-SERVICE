@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class BorrowProcessor implements TransactionProcessor{
@@ -92,7 +94,8 @@ public class BorrowProcessor implements TransactionProcessor{
         tx.setQuantity(request.getQuantity());
         tx.setPerformedBy(currentUser);
         tx.setNotes(request.getNotes());
-
+        tx.setCreatedAt(LocalDateTime.now());
+        tx.setUpdatedAt(LocalDateTime.now());
         itemsService.updateItemStatus(item.getId());
 
         return mapper.toItemTransactionRes(transactionsRepository.save(tx));

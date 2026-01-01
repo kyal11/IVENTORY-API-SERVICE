@@ -33,7 +33,8 @@ public class ItemOwnerStocks {
     @Column(nullable = false)
     private Integer quantity;
 
-    private Integer borrowedQuantity;
+    @Column(name = "borrowed_quantity", nullable = false)
+    private Integer borrowedQuantity = 0;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

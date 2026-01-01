@@ -7,6 +7,9 @@ import com.task.inventory.dto.item.ItemRes;
 import com.task.inventory.dto.item.UpdateItemReq;
 import com.task.inventory.services.ItemsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +25,10 @@ public class ItemsController {
     private final ItemsService itemsService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ItemRes>>> getAll() {
-        return ResponseEntity.ok(itemsService.getAll());
+    public ResponseEntity<ApiResponse<Page<ItemRes>>> getAll(
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
+        return ResponseEntity.ok(itemsService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
@@ -47,12 +52,6 @@ public class ItemsController {
         return ResponseEntity.ok(itemsService.getByStatus(status));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<ApiResponse<List<ItemRes>>> searchByName(
-            @RequestParam String name
-    ) {
-        return ResponseEntity.ok(itemsService.searchByName(name));
-    }
 
     @PostMapping
     public ResponseEntity<ApiResponse<ItemRes>> create(
@@ -69,13 +68,5 @@ public class ItemsController {
             @RequestBody UpdateItemReq request
     ) {
         return ResponseEntity.ok(itemsService.update(id, request));
-    }
-
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<ApiResponse<String>> updateStatus(
-            @PathVariable UUID id,
-            @RequestParam ItemStatus status
-    ) {
-        return ResponseEntity.ok(itemsService.updateStatus(id, status));
     }
 }

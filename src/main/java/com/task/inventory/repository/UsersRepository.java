@@ -20,7 +20,6 @@ public interface UsersRepository extends JpaRepository<Users, UUID> {
 
     Optional<Users> findByEmail(String email);
 
-
     @Query("SELECT u FROM Users u WHERE u.deletedAt IS NULL")
     List<Users> findAllUsers();
 

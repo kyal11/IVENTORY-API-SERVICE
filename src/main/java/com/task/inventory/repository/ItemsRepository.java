@@ -1,7 +1,10 @@
 package com.task.inventory.repository;
 
+import com.task.inventory.dto.item.ItemRes;
 import com.task.inventory.entity.Items;
 import com.task.inventory.constant.ItemStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +36,5 @@ public interface ItemsRepository extends JpaRepository<Items, UUID> {
 
     List<Items> findByStatusIn(List<ItemStatus> statuses);
 
+    Page<Items> findAll(Pageable pageable);
 }

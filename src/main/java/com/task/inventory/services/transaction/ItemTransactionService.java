@@ -10,21 +10,31 @@ import com.task.inventory.mapper.ItemTransactionMapper;
 import com.task.inventory.repository.ItemsTransactionsRepository;
 import com.task.inventory.services.transaction.processor.TransactionProcessor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class ItemTransactionService {
-    private ItemsTransactionsRepository itemsTransactionsRepository;
-    private final Map<TransactionType, TransactionProcessor> processorMap;
+    private final ItemsTransactionsRepository itemsTransactionsRepository;
+    private final Map<TransactionType, TransactionProcessor> processorMap = new EnumMap<>(TransactionType.class);
     private final ItemTransactionMapper mapper;
+
+    @Autowired
+    public ItemTransactionService(
+            ItemsTransactionsRepository itemsTransactionsRepository,
+            List<TransactionProcessor> processors,
+            ItemTransactionMapper mapper
+    ) {
+        this.itemsTransactionsRepository = itemsTransactionsRepository;
+        this.mapper = mapper;
+        processors.forEach(p -> processorMap.put(p.getType(), p));
+    }
 
     public ApiResponse<ItemTransactionRes> process(CreateItemTransactionReq dto) {
         TransactionProcessor processor = processorMap.get(dto.getTransactionType());
@@ -99,6 +109,8 @@ public class ItemTransactionService {
             TransactionType transactionType,
             UUID performedByUserId,
             String performedByName,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
             Pageable pageable
     ) {
         Page<ItemTransactionRes> page = itemsTransactionsRepository.searchTransactions(
@@ -107,6 +119,8 @@ public class ItemTransactionService {
                         transactionType,
                         performedByUserId,
                         performedByName,
+                        startDate,
+                        endDate,
                         pageable
                 )
                 .map(mapper::toItemTransactionRes);
