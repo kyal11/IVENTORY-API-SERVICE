@@ -1,7 +1,6 @@
 # 📦 Inventory API
 
-Inventory API adalah RESTful service untuk mengelola barang (item), pengguna (user), owner, serta transaksi item seperti assign, transfer, borrow, dan return.  
-API ini dirancang untuk mendukung tracking stok dan riwayat transaksi
+Inventory API adalah RESTful service untuk mengelola barang (item), pengguna (user), owner, serta transaksi item seperti assign, transfer, borrow, dan return. API ini dirancang untuk mendukung tracking stok dan riwayat transaksi
 
 Dokumentasi lengkap seluruh endpoint API dapat diakses melalui Postman Collection berikut:
 
