@@ -1,5 +1,6 @@
 package com.task.inventory.services.transaction.processor;
 
+import com.task.inventory.constant.ItemLogType;
 import com.task.inventory.constant.LoanStatus;
 import com.task.inventory.constant.TransactionType;
 import com.task.inventory.dto.itemTransaction.CreateItemTransactionReq;
@@ -10,9 +11,12 @@ import com.task.inventory.entity.Items;
 import com.task.inventory.entity.Users;
 import com.task.inventory.exception.BadRequestException;
 import com.task.inventory.exception.NotFoundException;
+import com.task.inventory.mapper.ItemMapper;
 import com.task.inventory.mapper.ItemTransactionMapper;
 import com.task.inventory.repository.*;
 import com.task.inventory.security.SecurityUtils;
+import com.task.inventory.services.ItemLogsService;
+import com.task.inventory.utils.ObjectToJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +33,9 @@ public class TransferProcessor implements  TransactionProcessor{
     private final ItemLoanRepository itemLoanRepository;
 
     private final ItemTransactionMapper mapper;
+    private final ItemMapper itemMapper;
+    private final ObjectToJson objectToJson;
+    private final ItemLogsService itemLogsService;
 
     @Override
     public TransactionType getType() {
@@ -39,6 +46,8 @@ public class TransferProcessor implements  TransactionProcessor{
     public ItemTransactionRes process(CreateItemTransactionReq request) {
         Items item = itemsRepository.findById(request.getItemId())
                 .orElseThrow(() -> new NotFoundException("User with ID " + request.getItemId() + " not found"));
+
+        String beforeState = objectToJson.toJson(itemMapper.toItemRes(item));
 
         ownersRepository.findById(request.getFromOwnerId())
                 .orElseThrow(() -> new NotFoundException("From owner not found"));
@@ -110,6 +119,23 @@ public class TransferProcessor implements  TransactionProcessor{
         tx.setUpdatedAt(LocalDateTime.now());
 
         ItemTransactions savedTx = transactionsRepository.save(tx);
+
+        // Audit Item Log
+        String afterState = objectToJson.toJson(
+                itemMapper.toItemResWithStocks(
+                        item,
+                        itemOwnerStocksRepository.findByItemId(item.getId())
+                )
+        );
+        itemLogsService.log(
+                item.getId(),
+                null,
+                ItemLogType.TRANSFER_OWNER,
+                "Transaction for transfer owner item",
+                beforeState,
+                afterState,
+                SecurityUtils.getCurrentUserId()
+        );
 
         return mapper.toItemTransactionRes(savedTx);
     }

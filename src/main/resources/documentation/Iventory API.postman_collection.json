@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "460ee0e4-6709-4ce0-911d-87d121749109",
 		"name": "Iventory API",
-		"description": "Collection ini berisi kumpulan request untuk **Inventory API**, sebuah RESTful API yang digunakan untuk mengelola **user, item, owner, serta transaksi item** seperti **assign, transfer, borrow, dan return**.EndFragment",
+		"description": "### 📦 Inventory API Collection Description\n\nCollection ini berisi kumpulan request untuk **Inventory API**, sebuah **RESTful API** yang dirancang untuk mengelola data inventaris secara terstruktur dan aman. API ini mendukung pengelolaan **user**, **item**, **owner**, serta berbagai **transaksi inventaris** seperti **assign**, **transfer**, **borrow**, dan **return**, lengkap dengan mekanisme **audit log** untuk setiap perubahan data.\n\n---\n\n### 🔐 Role & Access Control\n\nInventory API menerapkan **Role-Based Access Control (RBAC)** untuk memastikan setiap pengguna hanya dapat mengakses fitur sesuai dengan kewenangannya.\n\n#### 👑 ADMIN\n\n- Memiliki **akses penuh** ke seluruh endpoint API\n    \n- Dapat:\n    \n    - Mengelola user, item, dan owner\n        \n    - Melakukan seluruh jenis transaksi (assign, transfer, borrow, return)\n        \n    - Melihat seluruh audit log dan laporan transaksi\n        \n- Digunakan untuk kebutuhan **administrasi dan manajemen sistem**\n    \n\n#### 🧑‍💼 STAFF\n\n- Memiliki akses ke seluruh fitur **operasional inventaris**\n    \n- Dapat:\n    \n    - Melihat data item dan owner\n        \n    - Melakukan transaksi item (assign, transfer, borrow, return)\n        \n- **Tidak memiliki akses** untuk mengelola user\n    \n\n#### 🔍 AUDITOR\n\n- Bersifat **read-only**\n    \n- Hanya dapat melakukan **HTTP GET** pada seluruh endpoint API\n    \n- Digunakan untuk:\n    \n    - Monitoring data inventaris\n        \n    - Melihat riwayat transaksi dan audit log\n        \n- **Tidak dapat melakukan perubahan data**\n    \n\n---\n\n### 📝 Audit & Tracking\n\nSetiap operasi yang **mengubah data** (POST, PUT, DELETE) akan:\n\n- Mencatat **before state** dan **after state** dalam bentuk JSON\n    \n- Menyimpan informasi:\n    \n    - Jenis aktivitas\n        \n    - User yang melakukan aksi\n        \n    - Waktu perubahan\n        \n- Digunakan untuk kebutuhan **audit, tracing, dan accountability**",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38192115"
 	},
@@ -13,6 +13,16 @@
 				{
 					"name": "Create User",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -51,10 +61,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/users",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/users",
 									"path": [
 										"api",
 										"users"
@@ -118,6 +125,16 @@
 				{
 					"name": "Get All Users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -138,10 +155,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/api/users",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/users",
 									"path": [
 										"api",
 										"users"
@@ -208,6 +222,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -237,10 +261,7 @@
 									"raw": "{\r\n    \"name\": \"Rizky4\",\r\n    \"email\": \"rizky4@inventory.com\",\r\n    \"userRole\": \"STAFF\",\r\n    \"password\": \"rizky4pass\"\r\n  }"
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/users/16cdd83e-8c03-4602-8690-fa9934d57b91",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/users/16cdd83e-8c03-4602-8690-fa9934d57b91",
 									"path": [
 										"api",
 										"users",
@@ -305,6 +326,16 @@
 				{
 					"name": "Get User by Email",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -327,10 +358,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/api/users/email/rizky1@inventory.com",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/users/email/rizky1@inventory.com",
 									"path": [
 										"api",
 										"users",
@@ -400,6 +428,16 @@
 				{
 					"name": "Update User",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -439,10 +477,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/users/16cdd83e-8c03-4602-8690-fa9934d57b91",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/users/16cdd83e-8c03-4602-8690-fa9934d57b91",
 									"path": [
 										"api",
 										"users",
@@ -507,6 +542,16 @@
 				{
 					"name": "Soft Delete User",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -536,10 +581,7 @@
 									"raw": "{\r\n    \"name\": \"Rizky11\",\r\n    \"email\": \"\",\r\n    \"userRole\": \"\",\r\n    \"password\": \"\"\r\n  }"
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/users/2243b93b-dda4-4edd-9260-4af6e0f54640",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/users/2243b93b-dda4-4edd-9260-4af6e0f54640",
 									"path": [
 										"api",
 										"users",
@@ -602,7 +644,7 @@
 					]
 				}
 			],
-			"description": "Digunakan untuk mengelola data pengguna dalam sistem inventory.EndFragment"
+			"description": "Digunakan untuk mengelola data pengguna dalam sistem inventory.\n\nHanya dapat diakses dengan akun user ADMIN"
 		},
 		{
 			"name": "Item",
@@ -613,6 +655,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQVVESVRPUiIsInVzZXJJZCI6ImQzOTg1OWYxLWUwYzQtNDFiYS05ZTFkLWFkMDYwYjE1ZmNmYiIsImVtYWlsIjoiYXVkaXRvckBpbnZlbnRvcnkuY29tIiwic3ViIjoiZDM5ODU5ZjEtZTBjNC00MWJhLTllMWQtYWQwNjBiMTVmY2ZiIiwiaWF0IjoxNzY3MzU1Mzg0LCJleHAiOjIxMjczNTUzODR9.ICDe-zfbT3n5F2c7b4zv6HICzJRdHXpXrEk1APSwABk",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -641,10 +693,7 @@
 									"raw": "  {\r\n    \"name\": \"Admin Utama\",\r\n    \"email\": \"admin@inventory.com\",\r\n    \"userRole\": \"ADMIN\",\r\n    \"password\": \"admin123\"\r\n  }"
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/items",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/items",
 									"path": [
 										"api",
 										"items"
@@ -711,6 +760,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -740,10 +799,7 @@
 									"raw": "  {\r\n    \"name\": \"Admin Utama\",\r\n    \"email\": \"admin@inventory.com\",\r\n    \"userRole\": \"ADMIN\",\r\n    \"password\": \"admin123\"\r\n  }"
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/items/50000001-0001-4001-8001-000000000001",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/items/50000001-0001-4001-8001-000000000001",
 									"path": [
 										"api",
 										"items",
@@ -811,6 +867,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -841,10 +907,7 @@
 									"raw": "  {\r\n    \"name\": \"Admin Utama\",\r\n    \"email\": \"admin@inventory.com\",\r\n    \"userRole\": \"ADMIN\",\r\n    \"password\": \"admin123\"\r\n  }"
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/items/code/IVNTR_20251228_0022",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/items/code/IVNTR_20251228_0022",
 									"path": [
 										"api",
 										"items",
@@ -913,6 +976,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -943,10 +1016,7 @@
 									"raw": "  {\r\n    \"name\": \"Admin Utama\",\r\n    \"email\": \"admin@inventory.com\",\r\n    \"userRole\": \"ADMIN\",\r\n    \"password\": \"admin123\"\r\n  }"
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/items/status/UNAVAILABLE",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/items/status/UNAVAILABLE",
 									"path": [
 										"api",
 										"items",
@@ -1012,6 +1082,16 @@
 				{
 					"name": "Create Product",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1050,10 +1130,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/items",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/items",
 									"path": [
 										"api",
 										"items"
@@ -1156,10 +1233,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/items/50000001-0001-4001-8001-000000000001",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/items/50000001-0001-4001-8001-000000000001",
 									"path": [
 										"api",
 										"items",
@@ -1224,6 +1298,16 @@
 				{
 					"name": "Search Item",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1277,10 +1361,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/api/items/search?name=&code=IVNTR_20251228_0022&status&minQty&startDate&endDate",
-									"host": [
-										"{{baseURL}}"
-									],
+									"raw": "/api/items/search?name=&code=IVNTR_20251228_0022&status&minQty&startDate&endDate",
 									"path": [
 										"api",
 										"items",
@@ -1371,6 +1452,16 @@
 				{
 					"name": "Track Item Detail By CodeProduct",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1387,14 +1478,14 @@
 							"variable": [
 								{
 									"key": "codeProduct",
-									"value": "IVNTR_20251228_0001"
+									"value": "IVNTR_20260101_0001"
 								}
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "Track Item Detail Success",
+							"name": "Track Item Detail By CodeProduct Success",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1412,7 +1503,7 @@
 									"variable": [
 										{
 											"key": "codeProduct",
-											"value": "IVNTR_20251228_0001"
+											"value": "IVNTR_20260101_0001"
 										}
 									]
 								}
@@ -1455,7 +1546,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 18:35:37 GMT"
+									"value": "Fri, 02 Jan 2026 11:51:23 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -1467,12 +1558,12 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"Get item tracking data successfully\",\n    \"data\": {\n        \"activeBorrowed\": [\n            {\n                \"borrowedAt\": \"2026-01-01T22:09:17.413354\",\n                \"borrowedBy\": null,\n                \"loanId\": \"41c98405-508b-414b-baca-80bb3fb632ff\",\n                \"performedBy\": \"21111111-1111-4111-8111-111111111111\",\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            {\n                \"borrowedAt\": \"2026-01-01T22:00:21.419352\",\n                \"borrowedBy\": null,\n                \"loanId\": \"dd0ef49c-b4aa-4de9-977e-f7c0366c051d\",\n                \"performedBy\": \"21111111-1111-4111-8111-111111111111\",\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            }\n        ],\n        \"historyTransaction\": [\n            {\n                \"createdAt\": \"2026-01-01T22:26:17.649101\",\n                \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"id\": \"9e288803-e1ae-4091-9531-57adc6cb01a4\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n                \"performedByName\": \"Rizky1\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"RETURN\",\n                \"updatedAt\": \"2026-01-01T22:26:17.649101\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:09:17.494829\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"c1ec3477-6265-46d5-86cd-d157108fab6c\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky1\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:09:17.494829\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:07:46.635059\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"116bd640-2e0c-4627-964a-130942d6ed92\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky1\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:07:46.635059\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:00:21.485733\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"dcbfd83e-09cd-4067-8697-aaa22a7c9646\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky1\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:00:21.485733\"\n            }\n        ],\n        \"itemDataDetail\": {\n            \"codeProduct\": \"IVNTR_20251228_0001\",\n            \"createdAt\": \"2026-01-01T20:14:23.997095\",\n            \"description\": \"Intel Core i5, 8GB RAM, 512GB SSD, 14 inch\",\n            \"id\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemOwnerStockResList\": [\n                {\n                    \"availableQuantity\": 13,\n                    \"borrowedQuantity\": 2,\n                    \"createdAt\": null,\n                    \"id\": \"60000001-0001-4001-8001-000000000001\",\n                    \"itemCode\": \"IVNTR_20251228_0001\",\n                    \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                    \"itemName\": \"Laptop Dell Latitude 5420\",\n                    \"ownerId\": \"11111111-1111-4111-8111-111111111111\",\n                    \"quantity\": 15,\n                    \"updatedAt\": null\n                },\n                {\n                    \"availableQuantity\": 5,\n                    \"borrowedQuantity\": 0,\n                    \"createdAt\": null,\n                    \"id\": \"60000002-0002-4002-8002-000000000001\",\n                    \"itemCode\": \"IVNTR_20251228_0001\",\n                    \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                    \"itemName\": \"Laptop Dell Latitude 5420\",\n                    \"ownerId\": \"12222222-2222-4222-8222-222222222222\",\n                    \"quantity\": 5,\n                    \"updatedAt\": null\n                },\n                {\n                    \"availableQuantity\": 5,\n                    \"borrowedQuantity\": 0,\n                    \"createdAt\": null,\n                    \"id\": \"60000003-0003-4003-8003-000000000001\",\n                    \"itemCode\": \"IVNTR_20251228_0001\",\n                    \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                    \"itemName\": \"Laptop Dell Latitude 5420\",\n                    \"ownerId\": \"13333333-3333-4333-8333-333333333333\",\n                    \"quantity\": 5,\n                    \"updatedAt\": null\n                }\n            ],\n            \"name\": \"Laptop Dell Latitude 5420\",\n            \"status\": \"AVAILABLE\",\n            \"totalQuantity\": 25,\n            \"updatedAt\": \"2026-01-02T00:12:45.802518\"\n        },\n        \"itemLoanHistoryResList\": [\n            {\n                \"borrowedAt\": \"2026-01-01T22:09:17.413354\",\n                \"borrowedBy\": null,\n                \"loanId\": \"41c98405-508b-414b-baca-80bb3fb632ff\",\n                \"performedBy\": \"21111111-1111-4111-8111-111111111111\",\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            {\n                \"borrowedAt\": \"2026-01-01T22:07:46.607282\",\n                \"borrowedBy\": null,\n                \"loanId\": \"8afb6ac0-9930-4765-b61f-b4ec47f4994e\",\n                \"performedBy\": \"21111111-1111-4111-8111-111111111111\",\n                \"returnedAt\": \"2026-01-01T22:26:17.54676\",\n                \"status\": \"RETURNED\"\n            },\n            {\n                \"borrowedAt\": \"2026-01-01T22:00:21.419352\",\n                \"borrowedBy\": null,\n                \"loanId\": \"dd0ef49c-b4aa-4de9-977e-f7c0366c051d\",\n                \"performedBy\": \"21111111-1111-4111-8111-111111111111\",\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            }\n        ]\n    }\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"Get item tracking data successfully\",\n    \"data\": {\n        \"activeBorrowed\": [\n            {\n                \"borrowedAt\": \"2026-01-02T18:29:45.738492\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"985abd36-42dd-4c10-ba65-d03332a9e4db\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            {\n                \"borrowedAt\": \"2026-01-02T18:23:08.857895\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"ea45645b-2b8f-41d3-b6e8-31e9e3d8fd24\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            }\n        ],\n        \"historyTransaction\": [\n            {\n                \"createdAt\": \"2026-01-02T18:32:26.203253\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"48b105d9-74bc-4287-b898-e8ca20ba9b3f\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                    \"status\": \"RETURNED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n                \"performedByName\": \"Rizky1\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 8,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"RETURN\",\n                \"updatedAt\": \"2026-01-02T18:32:26.203253\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:31:05.86019\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"1e45e0bb-74b5-48ac-8b24-a8b5667fd879\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                    \"status\": \"RETURNED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 8,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:31:05.86019\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:29:45.756567\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"9a7a6e4c-4560-47bd-a7a4-bd6fedef3382\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:29:45.738492\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"985abd36-42dd-4c10-ba65-d03332a9e4db\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": null,\n                    \"status\": \"BORROWED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:29:45.756567\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:23:08.8749\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"d185b498-f740-4b47-b5bf-a5694f9f3ec0\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:23:08.857895\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"ea45645b-2b8f-41d3-b6e8-31e9e3d8fd24\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": null,\n                    \"status\": \"BORROWED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:23:08.8749\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:56:02.257787\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"ea4e13de-e67e-4deb-8c5e-5f9ba03de12b\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:56:02.257787\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:26:36.238673\",\n                \"fromOwnerId\": null,\n                \"id\": \"b587ae46-5479-44b8-8eb5-3bbc04453807\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": null,\n                \"transactionType\": \"INITIAL_ASSIGN\",\n                \"updatedAt\": \"2026-01-01T21:26:36.238673\"\n            }\n        ],\n        \"itemDataDetail\": {\n            \"codeProduct\": \"IVNTR_20260101_0001\",\n            \"createdAt\": \"2026-01-01T21:26:36.179365\",\n            \"description\": \"Space Gray, 16GB RAM, 512GB SSD\",\n            \"id\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemOwnerStockResList\": [\n                {\n                    \"availableQuantity\": 8,\n                    \"borrowedQuantity\": 2,\n                    \"createdAt\": null,\n                    \"id\": \"e792418e-a812-462a-b9a4-db7e45a2bd06\",\n                    \"itemCode\": \"IVNTR_20260101_0001\",\n                    \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                    \"itemName\": \"MacBook Pro M3\",\n                    \"ownerId\": \"41111111-1111-4111-8111-111111111111\",\n                    \"quantity\": 10,\n                    \"updatedAt\": null\n                }\n            ],\n            \"name\": \"MacBook Pro M3\",\n            \"status\": \"AVAILABLE\",\n            \"totalQuantity\": 10,\n            \"updatedAt\": \"2026-01-02T18:32:26.218065\"\n        },\n        \"itemLoanHistoryResList\": [\n            {\n                \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                \"status\": \"RETURNED\"\n            },\n            {\n                \"borrowedAt\": \"2026-01-02T18:29:45.738492\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"985abd36-42dd-4c10-ba65-d03332a9e4db\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            {\n                \"borrowedAt\": \"2026-01-02T18:23:08.857895\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"ea45645b-2b8f-41d3-b6e8-31e9e3d8fd24\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            }\n        ]\n    }\n}"
 						}
 					]
 				}
 			],
-			"description": "Digunakan untuk mengelola data barang (item), status ketersediaan, serta tracking peminjaman dan transaksi item.EndFragment"
+			"description": "Digunakan untuk mengelola data barang (item), status ketersediaan, serta tracking peminjaman dan transaksi item.\n\nDapat diakses oleh akun dengan User:\n\n- ADMIN\n    \n- STAFF\n    \n- AUDITOR (GET METHOD ONLY)"
 		},
 		{
 			"name": "Auth",
@@ -1484,7 +1575,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"rizky1@inventory.com\",\r\n    \"password\": \"rizky1pass\"\r\n  }",
+							"raw": "{\r\n    \"email\": \"rizky2@inventory.com\",\r\n    \"password\": \"rizky2pass\"\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1672,7 +1763,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiJjOGY3MzFiMy1kNzE2LTQ4YmQtYTE4NC1hMzhmMmQ5ZWUwYmMiLCJlbWFpbCI6InJpemt5NEBpbnZlbnRvcnkuY29tIiwic3ViIjoiYzhmNzMxYjMtZDcxNi00OGJkLWExODQtYTM4ZjJkOWVlMGJjIiwiaWF0IjoxNzY3Mjc1OTA2LCJleHAiOjE3NjcyNzk1MDZ9.XIY2ArJMVvpj0ZgTcLfm2Ok3eMIMnpYghB1-TYFMsps",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
 									"type": "string"
 								}
 							]
@@ -1681,7 +1772,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"transactionType\": \"INITIAL_ASSIGN\",\r\n    \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\r\n    \"item\": {\r\n        \"name\": \"MacBook Pro M3\",\r\n        \"description\": \"Space Gray, 16GB RAM, 512GB SSD\",\r\n        \"totalQuantity\": 10,\r\n        \"status\": \"AVAILABLE\",\r\n        \"assignItemOwner\": [\r\n            {\r\n                \"ownerId\": \"11111111-1111-4111-8111-111111111111\",\r\n                \"quantity\": 10\r\n            }\r\n        ]\r\n    }\r\n}",
+							"raw": "{\r\n    \"transactionType\": \"INITIAL_ASSIGN\",\r\n    \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\r\n    \"item\": {\r\n        \"name\": \"Thinkpad 15\",\r\n        \"description\": \"16GB RAM, 512GB SSD\",\r\n        \"totalQuantity\": 20,\r\n        \"status\": \"AVAILABLE\",\r\n        \"assignItemOwner\": [\r\n            {\r\n                \"ownerId\": \"11111111-1111-4111-8111-111111111111\",\r\n                \"quantity\": 10\r\n            }\r\n        ]\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1787,7 +1878,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiJjOGY3MzFiMy1kNzE2LTQ4YmQtYTE4NC1hMzhmMmQ5ZWUwYmMiLCJlbWFpbCI6InJpemt5NEBpbnZlbnRvcnkuY29tIiwic3ViIjoiYzhmNzMxYjMtZDcxNi00OGJkLWExODQtYTM4ZjJkOWVlMGJjIiwiaWF0IjoxNzY3Mjc1OTA2LCJleHAiOjE3NjcyNzk1MDZ9.XIY2ArJMVvpj0ZgTcLfm2Ok3eMIMnpYghB1-TYFMsps",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
 									"type": "string"
 								}
 							]
@@ -1796,7 +1887,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"transactionType\": \"TRANSFER\",\r\n    \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\r\n    \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\r\n    \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\r\n    \"quantity\": 10,\r\n    \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\"\r\n}",
+							"raw": "{\r\n    \"transactionType\": \"TRANSFER\",\r\n    \"itemId\": \"50000003-0003-4003-8003-000000000004\",\r\n    \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\r\n    \"toOwnerId\": \"11111111-1111-4111-8111-111111111111\",\r\n    \"quantity\": 30,\r\n    \"notes\": \"Transfer kepemilikan barang ke divisi IT\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1979,7 +2070,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiIxNmNkZDgzZS04YzAzLTQ2MDItODY5MC1mYTk5MzRkNTdiOTEiLCJlbWFpbCI6InJpemt5MUBpbnZlbnRvcnkuY29tIiwic3ViIjoiMTZjZGQ4M2UtOGMwMy00NjAyLTg2OTAtZmE5OTM0ZDU3YjkxIiwiaWF0IjoxNzY3Mjc5NjExLCJleHAiOjE3NjcyODMyMTF9.Nctw-ongKhqbSMdrsgkm96uOdc9qR2FL9ZltkxwlPZo",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
 									"type": "string"
 								}
 							]
@@ -1988,7 +2079,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"transactionType\": \"BORROW\",\r\n    \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\r\n    \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\r\n    \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\r\n    \"quantity\": 1,\r\n    \"dayDueDate\": 3,\r\n    \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\"\r\n}",
+							"raw": "{\r\n    \"transactionType\": \"BORROW\",\r\n    \"itemId\": \"00a1284c-650a-4fe7-9691-6e3e679f9770\",\r\n    \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\r\n    \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\r\n    \"quantity\": 20,\r\n    \"dayDueDate\": 3,\r\n    \"notes\": \"Meminjam Barang\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2008,13 +2099,13 @@
 					},
 					"response": [
 						{
-							"name": "Borrowed Item Successfully",
+							"name": "Borrow Item Successfully",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"transactionType\": \"BORROW\",\r\n    \"itemId\": \"50000001-0001-4001-8001-000000000001\",\r\n    \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\r\n    \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\r\n    \"quantity\": 1,\r\n    \"dayDueDate\": 7,\r\n    \"notes\": \"Pinjam untuk keperluan presentasi klien\"\r\n}",
+									"raw": "{\r\n    \"transactionType\": \"BORROW\",\r\n    \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\r\n    \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\r\n    \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\r\n    \"quantity\": 8,\r\n    \"dayDueDate\": 3,\r\n    \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2070,7 +2161,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 15:09:17 GMT"
+									"value": "Fri, 02 Jan 2026 11:31:05 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2082,7 +2173,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"Transaction processed successfully\",\n    \"data\": {\n        \"createdAt\": \"2026-01-01T22:09:17.4345321\",\n        \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n        \"id\": \"c1ec3477-6265-46d5-86cd-d157108fab6c\",\n        \"itemCode\": \"IVNTR_20251228_0001\",\n        \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n        \"itemName\": \"Laptop Dell Latitude 5420\",\n        \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n        \"performedByName\": \"Rizky1\",\n        \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n        \"quantity\": 1,\n        \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n        \"transactionType\": \"BORROW\",\n        \"updatedAt\": \"2026-01-01T22:09:17.4345321\"\n    }\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"Transaction processed successfully\",\n    \"data\": {\n        \"createdAt\": \"2026-01-02T18:31:05.86019\",\n        \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n        \"id\": \"1e45e0bb-74b5-48ac-8b24-a8b5667fd879\",\n        \"itemCode\": \"IVNTR_20260101_0001\",\n        \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n        \"itemLoanDetail\": {\n            \"borrowedAt\": \"2026-01-02T18:31:05.8579493\",\n            \"borrowerId\": {\n                \"active\": true,\n                \"codeOwner\": \"PER-001\",\n                \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                \"id\": \"21111111-1111-4111-8111-111111111111\",\n                \"name\": \"Manager IT - John Doe\",\n                \"type\": \"PERSON\",\n                \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n            },\n            \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n            \"ownerId\": {\n                \"active\": true,\n                \"codeOwner\": \"VEN-TECH\",\n                \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                \"id\": \"41111111-1111-4111-8111-111111111111\",\n                \"name\": \"PT. Tech Solutions\",\n                \"type\": \"VENDOR\",\n                \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n            },\n            \"returnedAt\": null,\n            \"status\": \"BORROWED\"\n        },\n        \"itemName\": \"MacBook Pro M3\",\n        \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n        \"performedByName\": \"Rizky2\",\n        \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n        \"quantity\": 8,\n        \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n        \"transactionType\": \"BORROW\",\n        \"updatedAt\": \"2026-01-02T18:31:05.86019\"\n    }\n}"
 						}
 					]
 				},
@@ -2103,7 +2194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"transactionType\": \"RETURN\",\r\n    \"itemLoanId\": \"8afb6ac0-9930-4765-b61f-b4ec47f4994e\",\r\n    \"notes\": \"Barang dikembalikan dalam kondisi baik\"\r\n}",
+							"raw": "{\r\n    \"transactionType\": \"RETURN\",\r\n    \"itemLoanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\r\n    \"notes\": \"Barang dikembalikan dalam kondisi baik\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2129,7 +2220,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"transactionType\": \"RETURN\",\r\n    \"itemLoanId\": \"8afb6ac0-9930-4765-b61f-b4ec47f4994e\",\r\n    \"notes\": \"Barang dikembalikan dalam kondisi baik\"\r\n}",
+									"raw": "{\r\n    \"transactionType\": \"RETURN\",\r\n    \"itemLoanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\r\n    \"notes\": \"Barang dikembalikan dalam kondisi baik\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2185,7 +2276,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 15:26:17 GMT"
+									"value": "Fri, 02 Jan 2026 11:32:26 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2197,7 +2288,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"Transaction processed successfully\",\n    \"data\": {\n        \"createdAt\": \"2026-01-01T22:26:17.5756077\",\n        \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n        \"id\": \"9e288803-e1ae-4091-9531-57adc6cb01a4\",\n        \"itemCode\": \"IVNTR_20251228_0001\",\n        \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n        \"itemName\": \"Laptop Dell Latitude 5420\",\n        \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n        \"performedByName\": \"Rizky1\",\n        \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n        \"quantity\": 1,\n        \"toOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n        \"transactionType\": \"RETURN\",\n        \"updatedAt\": \"2026-01-01T22:26:17.5756077\"\n    }\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"Transaction processed successfully\",\n    \"data\": {\n        \"createdAt\": \"2026-01-02T18:32:26.203253\",\n        \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n        \"id\": \"48b105d9-74bc-4287-b898-e8ca20ba9b3f\",\n        \"itemCode\": \"IVNTR_20260101_0001\",\n        \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n        \"itemLoanDetail\": {\n            \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n            \"borrowerId\": {\n                \"active\": true,\n                \"codeOwner\": \"PER-001\",\n                \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                \"hibernateLazyInitializer\": {},\n                \"id\": \"21111111-1111-4111-8111-111111111111\",\n                \"name\": \"Manager IT - John Doe\",\n                \"type\": \"PERSON\",\n                \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n            },\n            \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n            \"ownerId\": {\n                \"active\": true,\n                \"codeOwner\": \"VEN-TECH\",\n                \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                \"hibernateLazyInitializer\": {},\n                \"id\": \"41111111-1111-4111-8111-111111111111\",\n                \"name\": \"PT. Tech Solutions\",\n                \"type\": \"VENDOR\",\n                \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n            },\n            \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n            \"status\": \"RETURNED\"\n        },\n        \"itemName\": \"MacBook Pro M3\",\n        \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n        \"performedByName\": \"Rizky1\",\n        \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n        \"quantity\": 8,\n        \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n        \"transactionType\": \"RETURN\",\n        \"updatedAt\": \"2026-01-02T18:32:26.203253\"\n    }\n}"
 						}
 					]
 				},
@@ -2293,7 +2384,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 16:24:22 GMT"
+									"value": "Fri, 02 Jan 2026 11:33:10 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2305,7 +2396,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"All transactions retrieved successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"createdAt\": \"2026-01-01T21:26:36.238673\",\n                \"fromOwnerId\": null,\n                \"id\": \"b587ae46-5479-44b8-8eb5-3bbc04453807\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": null,\n                \"transactionType\": \"INITIAL_ASSIGN\",\n                \"updatedAt\": \"2026-01-01T21:26:36.238673\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:52:23.229262\",\n                \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"id\": \"90820cb7-5c8a-43c5-8ded-bc1277f79541\",\n                \"itemCode\": \"IVNTR_20251228_0017\",\n                \"itemId\": \"50000004-0004-4004-8004-000000000003\",\n                \"itemName\": \"Network Cable Cat6\",\n                \"notes\": \"Hibah kabel untuk keperluan infrastuktur PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 100,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:52:23.229262\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:56:02.257787\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"ea4e13de-e67e-4deb-8c5e-5f9ba03de12b\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:56:02.257787\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:00:21.485733\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"dcbfd83e-09cd-4067-8697-aaa22a7c9646\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:00:21.485733\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:07:46.635059\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"116bd640-2e0c-4627-964a-130942d6ed92\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:07:46.635059\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:09:17.494829\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"c1ec3477-6265-46d5-86cd-d157108fab6c\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:09:17.494829\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:21:59.065756\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"10b24608-bd3a-4218-ac76-803ff3372dd3\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:21:59.065756\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:22:04.793746\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"e200c192-5c28-4087-a09e-25793277ca47\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:22:04.793746\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:22:41.60393\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"b12f8913-a0fa-42bd-bab4-644e83d94926\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 7,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:22:41.60393\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:22:47.30577\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"d66237c9-6120-479a-87a8-f10fed04f833\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:22:47.30577\"\n            }\n        ],\n        \"empty\": false,\n        \"first\": true,\n        \"last\": false,\n        \"number\": 0,\n        \"numberOfElements\": 10,\n        \"pageable\": {\n            \"offset\": 0,\n            \"pageNumber\": 0,\n            \"pageSize\": 10,\n            \"paged\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"unpaged\": false\n        },\n        \"size\": 10,\n        \"sort\": {\n            \"empty\": true,\n            \"sorted\": false,\n            \"unsorted\": true\n        },\n        \"totalElements\": 11,\n        \"totalPages\": 2\n    }\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"All transactions retrieved successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"createdAt\": \"2026-01-01T21:26:36.238673\",\n                \"fromOwnerId\": null,\n                \"id\": \"b587ae46-5479-44b8-8eb5-3bbc04453807\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": null,\n                \"transactionType\": \"INITIAL_ASSIGN\",\n                \"updatedAt\": \"2026-01-01T21:26:36.238673\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:52:23.229262\",\n                \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"id\": \"90820cb7-5c8a-43c5-8ded-bc1277f79541\",\n                \"itemCode\": \"IVNTR_20251228_0017\",\n                \"itemId\": \"50000004-0004-4004-8004-000000000003\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"Network Cable Cat6\",\n                \"notes\": \"Hibah kabel untuk keperluan infrastuktur PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 100,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:52:23.229262\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:56:02.257787\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"ea4e13de-e67e-4deb-8c5e-5f9ba03de12b\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:56:02.257787\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:23:08.8749\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"d185b498-f740-4b47-b5bf-a5694f9f3ec0\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:23:08.857895\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"ea45645b-2b8f-41d3-b6e8-31e9e3d8fd24\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": null,\n                    \"status\": \"BORROWED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:23:08.8749\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:29:45.756567\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"9a7a6e4c-4560-47bd-a7a4-bd6fedef3382\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:29:45.738492\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"985abd36-42dd-4c10-ba65-d03332a9e4db\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": null,\n                    \"status\": \"BORROWED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:29:45.756567\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:31:05.86019\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"1e45e0bb-74b5-48ac-8b24-a8b5667fd879\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                    \"status\": \"RETURNED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 8,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:31:05.86019\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:32:26.203253\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"48b105d9-74bc-4287-b898-e8ca20ba9b3f\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                    \"status\": \"RETURNED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n                \"performedByName\": \"Rizky1\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 8,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"RETURN\",\n                \"updatedAt\": \"2026-01-02T18:32:26.203253\"\n            }\n        ],\n        \"empty\": false,\n        \"first\": true,\n        \"last\": true,\n        \"number\": 0,\n        \"numberOfElements\": 7,\n        \"pageable\": {\n            \"offset\": 0,\n            \"pageNumber\": 0,\n            \"pageSize\": 10,\n            \"paged\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"unpaged\": false\n        },\n        \"size\": 10,\n        \"sort\": {\n            \"empty\": true,\n            \"sorted\": false,\n            \"unsorted\": true\n        },\n        \"totalElements\": 7,\n        \"totalPages\": 1\n    }\n}"
 						}
 					]
 				},
@@ -2346,7 +2437,7 @@
 					},
 					"response": [
 						{
-							"name": "Get Transaction By itemId Success",
+							"name": "Get Transaction By Item Id Success",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -2405,7 +2496,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 16:25:38 GMT"
+									"value": "Fri, 02 Jan 2026 11:33:35 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2417,7 +2508,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"Transaction history for item retrieved successfully\",\n    \"data\": [\n        {\n            \"createdAt\": \"2026-01-01T22:22:47.30577\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"d66237c9-6120-479a-87a8-f10fed04f833\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:47.30577\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:41.60393\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"b12f8913-a0fa-42bd-bab4-644e83d94926\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 7,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:41.60393\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:04.793746\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"e200c192-5c28-4087-a09e-25793277ca47\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:04.793746\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:21:59.065756\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"10b24608-bd3a-4218-ac76-803ff3372dd3\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:21:59.065756\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T21:56:02.257787\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"ea4e13de-e67e-4deb-8c5e-5f9ba03de12b\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\",\n            \"performedByName\": \"Rizky4\",\n            \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n            \"quantity\": 10,\n            \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"TRANSFER\",\n            \"updatedAt\": \"2026-01-01T21:56:02.257787\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T21:26:36.238673\",\n            \"fromOwnerId\": null,\n            \"id\": \"b587ae46-5479-44b8-8eb5-3bbc04453807\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\n            \"performedByName\": \"Rizky4\",\n            \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n            \"quantity\": 10,\n            \"toOwnerId\": null,\n            \"transactionType\": \"INITIAL_ASSIGN\",\n            \"updatedAt\": \"2026-01-01T21:26:36.238673\"\n        }\n    ]\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"Transaction history for item retrieved successfully\",\n    \"data\": [\n        {\n            \"createdAt\": \"2026-01-02T18:32:26.203253\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"48b105d9-74bc-4287-b898-e8ca20ba9b3f\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                \"status\": \"RETURNED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n            \"performedByName\": \"Rizky1\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 8,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"RETURN\",\n            \"updatedAt\": \"2026-01-02T18:32:26.203253\"\n        },\n        {\n            \"createdAt\": \"2026-01-02T18:31:05.86019\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"1e45e0bb-74b5-48ac-8b24-a8b5667fd879\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                \"status\": \"RETURNED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky2\",\n            \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n            \"quantity\": 8,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-02T18:31:05.86019\"\n        },\n        {\n            \"createdAt\": \"2026-01-02T18:29:45.756567\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"9a7a6e4c-4560-47bd-a7a4-bd6fedef3382\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:29:45.738492\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"985abd36-42dd-4c10-ba65-d03332a9e4db\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky2\",\n            \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-02T18:29:45.756567\"\n        },\n        {\n            \"createdAt\": \"2026-01-02T18:23:08.8749\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"d185b498-f740-4b47-b5bf-a5694f9f3ec0\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:23:08.857895\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"ea45645b-2b8f-41d3-b6e8-31e9e3d8fd24\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky2\",\n            \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-02T18:23:08.8749\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T21:56:02.257787\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"ea4e13de-e67e-4deb-8c5e-5f9ba03de12b\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": null,\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\",\n            \"performedByName\": \"Rizky4\",\n            \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n            \"quantity\": 10,\n            \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"TRANSFER\",\n            \"updatedAt\": \"2026-01-01T21:56:02.257787\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T21:26:36.238673\",\n            \"fromOwnerId\": null,\n            \"id\": \"b587ae46-5479-44b8-8eb5-3bbc04453807\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": null,\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\n            \"performedByName\": \"Rizky4\",\n            \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n            \"quantity\": 10,\n            \"toOwnerId\": null,\n            \"transactionType\": \"INITIAL_ASSIGN\",\n            \"updatedAt\": \"2026-01-01T21:26:36.238673\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -2458,7 +2549,7 @@
 					},
 					"response": [
 						{
-							"name": "Get All Transaction By Type",
+							"name": "Get All Transaction By Type Success",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -2517,7 +2608,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 16:27:22 GMT"
+									"value": "Fri, 02 Jan 2026 11:35:07 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2529,7 +2620,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"Transactions filtered by type: BORROW retrieved successfully\",\n    \"data\": [\n        {\n            \"createdAt\": \"2026-01-01T22:00:21.485733\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"dcbfd83e-09cd-4067-8697-aaa22a7c9646\",\n            \"itemCode\": \"IVNTR_20251228_0001\",\n            \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemName\": \"Laptop Dell Latitude 5420\",\n            \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:00:21.485733\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:07:46.635059\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"116bd640-2e0c-4627-964a-130942d6ed92\",\n            \"itemCode\": \"IVNTR_20251228_0001\",\n            \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemName\": \"Laptop Dell Latitude 5420\",\n            \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:07:46.635059\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:09:17.494829\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"c1ec3477-6265-46d5-86cd-d157108fab6c\",\n            \"itemCode\": \"IVNTR_20251228_0001\",\n            \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemName\": \"Laptop Dell Latitude 5420\",\n            \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:09:17.494829\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:21:59.065756\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"10b24608-bd3a-4218-ac76-803ff3372dd3\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:21:59.065756\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:04.793746\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"e200c192-5c28-4087-a09e-25793277ca47\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:04.793746\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:41.60393\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"b12f8913-a0fa-42bd-bab4-644e83d94926\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 7,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:41.60393\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:47.30577\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"d66237c9-6120-479a-87a8-f10fed04f833\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:47.30577\"\n        }\n    ]\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"Transactions filtered by type: BORROW retrieved successfully\",\n    \"data\": [\n        {\n            \"createdAt\": \"2026-01-02T18:23:08.8749\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"d185b498-f740-4b47-b5bf-a5694f9f3ec0\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:23:08.857895\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"ea45645b-2b8f-41d3-b6e8-31e9e3d8fd24\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky2\",\n            \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-02T18:23:08.8749\"\n        },\n        {\n            \"createdAt\": \"2026-01-02T18:29:45.756567\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"9a7a6e4c-4560-47bd-a7a4-bd6fedef3382\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:29:45.738492\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"985abd36-42dd-4c10-ba65-d03332a9e4db\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": null,\n                \"status\": \"BORROWED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky2\",\n            \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-02T18:29:45.756567\"\n        },\n        {\n            \"createdAt\": \"2026-01-02T18:31:05.86019\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"1e45e0bb-74b5-48ac-8b24-a8b5667fd879\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                \"status\": \"RETURNED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky2\",\n            \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n            \"quantity\": 8,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-02T18:31:05.86019\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -2629,7 +2720,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 16:28:47 GMT"
+									"value": "Fri, 02 Jan 2026 11:35:39 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2641,7 +2732,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"Transactions performed by user retrieved successfully\",\n    \"data\": [\n        {\n            \"createdAt\": \"2026-01-01T22:00:21.485733\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"dcbfd83e-09cd-4067-8697-aaa22a7c9646\",\n            \"itemCode\": \"IVNTR_20251228_0001\",\n            \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemName\": \"Laptop Dell Latitude 5420\",\n            \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:00:21.485733\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:07:46.635059\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"116bd640-2e0c-4627-964a-130942d6ed92\",\n            \"itemCode\": \"IVNTR_20251228_0001\",\n            \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemName\": \"Laptop Dell Latitude 5420\",\n            \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:07:46.635059\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:09:17.494829\",\n            \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"id\": \"c1ec3477-6265-46d5-86cd-d157108fab6c\",\n            \"itemCode\": \"IVNTR_20251228_0001\",\n            \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemName\": \"Laptop Dell Latitude 5420\",\n            \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:09:17.494829\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:21:59.065756\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"10b24608-bd3a-4218-ac76-803ff3372dd3\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:21:59.065756\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:04.793746\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"e200c192-5c28-4087-a09e-25793277ca47\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:04.793746\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:41.60393\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"b12f8913-a0fa-42bd-bab4-644e83d94926\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 7,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:41.60393\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:22:47.30577\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"d66237c9-6120-479a-87a8-f10fed04f833\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"BORROW\",\n            \"updatedAt\": \"2026-01-01T22:22:47.30577\"\n        },\n        {\n            \"createdAt\": \"2026-01-01T22:26:17.649101\",\n            \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"id\": \"9e288803-e1ae-4091-9531-57adc6cb01a4\",\n            \"itemCode\": \"IVNTR_20251228_0001\",\n            \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n            \"itemName\": \"Laptop Dell Latitude 5420\",\n            \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n            \"performedByName\": \"Rizky11\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 1,\n            \"toOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"RETURN\",\n            \"updatedAt\": \"2026-01-01T22:26:17.649101\"\n        }\n    ]\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"Transactions performed by user retrieved successfully\",\n    \"data\": [\n        {\n            \"createdAt\": \"2026-01-02T18:32:26.203253\",\n            \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n            \"id\": \"48b105d9-74bc-4287-b898-e8ca20ba9b3f\",\n            \"itemCode\": \"IVNTR_20260101_0001\",\n            \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n            \"itemLoanDetail\": {\n                \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                \"borrowerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"PER-001\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"21111111-1111-4111-8111-111111111111\",\n                    \"name\": \"Manager IT - John Doe\",\n                    \"type\": \"PERSON\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                \"ownerId\": {\n                    \"active\": true,\n                    \"codeOwner\": \"VEN-TECH\",\n                    \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                    \"hibernateLazyInitializer\": {},\n                    \"id\": \"41111111-1111-4111-8111-111111111111\",\n                    \"name\": \"PT. Tech Solutions\",\n                    \"type\": \"VENDOR\",\n                    \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                },\n                \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                \"status\": \"RETURNED\"\n            },\n            \"itemName\": \"MacBook Pro M3\",\n            \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n            \"performedByName\": \"Rizky1\",\n            \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n            \"quantity\": 8,\n            \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n            \"transactionType\": \"RETURN\",\n            \"updatedAt\": \"2026-01-02T18:32:26.203253\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -2690,7 +2781,7 @@
 					},
 					"response": [
 						{
-							"name": "Get Transaction By Date Range",
+							"name": "Get Transaction By Date Range Success",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -2757,7 +2848,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 01 Jan 2026 16:30:15 GMT"
+									"value": "Fri, 02 Jan 2026 11:36:05 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2769,13 +2860,23 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": true,\n    \"message\": \"All transactions retrieved successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"createdAt\": \"2026-01-01T21:26:36.238673\",\n                \"fromOwnerId\": null,\n                \"id\": \"b587ae46-5479-44b8-8eb5-3bbc04453807\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": null,\n                \"transactionType\": \"INITIAL_ASSIGN\",\n                \"updatedAt\": \"2026-01-01T21:26:36.238673\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:52:23.229262\",\n                \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"id\": \"90820cb7-5c8a-43c5-8ded-bc1277f79541\",\n                \"itemCode\": \"IVNTR_20251228_0017\",\n                \"itemId\": \"50000004-0004-4004-8004-000000000003\",\n                \"itemName\": \"Network Cable Cat6\",\n                \"notes\": \"Hibah kabel untuk keperluan infrastuktur PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 100,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:52:23.229262\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:56:02.257787\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"ea4e13de-e67e-4deb-8c5e-5f9ba03de12b\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:56:02.257787\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:00:21.485733\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"dcbfd83e-09cd-4067-8697-aaa22a7c9646\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:00:21.485733\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:07:46.635059\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"116bd640-2e0c-4627-964a-130942d6ed92\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:07:46.635059\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:09:17.494829\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"c1ec3477-6265-46d5-86cd-d157108fab6c\",\n                \"itemCode\": \"IVNTR_20251228_0001\",\n                \"itemId\": \"50000001-0001-4001-8001-000000000001\",\n                \"itemName\": \"Laptop Dell Latitude 5420\",\n                \"notes\": \"Pinjam untuk keperluan presentasi klien\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:09:17.494829\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:21:59.065756\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"10b24608-bd3a-4218-ac76-803ff3372dd3\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:21:59.065756\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:22:04.793746\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"e200c192-5c28-4087-a09e-25793277ca47\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:22:04.793746\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:22:41.60393\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"b12f8913-a0fa-42bd-bab4-644e83d94926\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 7,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:22:41.60393\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T22:22:47.30577\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"d66237c9-6120-479a-87a8-f10fed04f833\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky11\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-01T22:22:47.30577\"\n            }\n        ],\n        \"empty\": false,\n        \"first\": true,\n        \"last\": false,\n        \"number\": 0,\n        \"numberOfElements\": 10,\n        \"pageable\": {\n            \"offset\": 0,\n            \"pageNumber\": 0,\n            \"pageSize\": 10,\n            \"paged\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"unpaged\": false\n        },\n        \"size\": 10,\n        \"sort\": {\n            \"empty\": true,\n            \"sorted\": false,\n            \"unsorted\": true\n        },\n        \"totalElements\": 11,\n        \"totalPages\": 2\n    }\n}"
+							"body": "{\n    \"status\": true,\n    \"message\": \"All transactions retrieved successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"createdAt\": \"2026-01-01T21:26:36.238673\",\n                \"fromOwnerId\": null,\n                \"id\": \"b587ae46-5479-44b8-8eb5-3bbc04453807\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Stok awal pengadaan laptop kantor 2026\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": null,\n                \"transactionType\": \"INITIAL_ASSIGN\",\n                \"updatedAt\": \"2026-01-01T21:26:36.238673\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:52:23.229262\",\n                \"fromOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"id\": \"90820cb7-5c8a-43c5-8ded-bc1277f79541\",\n                \"itemCode\": \"IVNTR_20251228_0017\",\n                \"itemId\": \"50000004-0004-4004-8004-000000000003\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"Network Cable Cat6\",\n                \"notes\": \"Hibah kabel untuk keperluan infrastuktur PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 100,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:52:23.229262\"\n            },\n            {\n                \"createdAt\": \"2026-01-01T21:56:02.257787\",\n                \"fromOwnerId\": \"11111111-1111-4111-8111-111111111111\",\n                \"id\": \"ea4e13de-e67e-4deb-8c5e-5f9ba03de12b\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": null,\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Transfer kepelikan barang ke PT. Tech Solutions\",\n                \"performedByName\": \"Rizky4\",\n                \"performedByUserId\": \"c8f731b3-d716-48bd-a184-a38f2d9ee0bc\",\n                \"quantity\": 10,\n                \"toOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"TRANSFER\",\n                \"updatedAt\": \"2026-01-01T21:56:02.257787\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:23:08.8749\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"d185b498-f740-4b47-b5bf-a5694f9f3ec0\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:23:08.857895\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"ea45645b-2b8f-41d3-b6e8-31e9e3d8fd24\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": null,\n                    \"status\": \"BORROWED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:23:08.8749\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:29:45.756567\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"9a7a6e4c-4560-47bd-a7a4-bd6fedef3382\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:29:45.738492\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"985abd36-42dd-4c10-ba65-d03332a9e4db\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": null,\n                    \"status\": \"BORROWED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 1,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:29:45.756567\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:31:05.86019\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"1e45e0bb-74b5-48ac-8b24-a8b5667fd879\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                    \"status\": \"RETURNED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Meminjam untuk keperluan develop aplikasi vendor\",\n                \"performedByName\": \"Rizky2\",\n                \"performedByUserId\": \"48662396-4459-4d3f-8819-a37ecb36ef1e\",\n                \"quantity\": 8,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"BORROW\",\n                \"updatedAt\": \"2026-01-02T18:31:05.86019\"\n            },\n            {\n                \"createdAt\": \"2026-01-02T18:32:26.203253\",\n                \"fromOwnerId\": \"41111111-1111-4111-8111-111111111111\",\n                \"id\": \"48b105d9-74bc-4287-b898-e8ca20ba9b3f\",\n                \"itemCode\": \"IVNTR_20260101_0001\",\n                \"itemId\": \"cbdb3f87-d2b0-4bf7-b265-86096258334e\",\n                \"itemLoanDetail\": {\n                    \"borrowedAt\": \"2026-01-02T18:31:05.857949\",\n                    \"borrowerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"PER-001\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"21111111-1111-4111-8111-111111111111\",\n                        \"name\": \"Manager IT - John Doe\",\n                        \"type\": \"PERSON\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"loanId\": \"465841ea-f0a7-436e-80fd-127df67a0231\",\n                    \"ownerId\": {\n                        \"active\": true,\n                        \"codeOwner\": \"VEN-TECH\",\n                        \"createdAt\": \"2026-01-01T20:14:23.95097\",\n                        \"hibernateLazyInitializer\": {},\n                        \"id\": \"41111111-1111-4111-8111-111111111111\",\n                        \"name\": \"PT. Tech Solutions\",\n                        \"type\": \"VENDOR\",\n                        \"updatedAt\": \"2026-01-01T20:14:23.95097\"\n                    },\n                    \"returnedAt\": \"2026-01-02T18:32:26.201081\",\n                    \"status\": \"RETURNED\"\n                },\n                \"itemName\": \"MacBook Pro M3\",\n                \"notes\": \"Barang dikembalikan dalam kondisi baik\",\n                \"performedByName\": \"Rizky1\",\n                \"performedByUserId\": \"16cdd83e-8c03-4602-8690-fa9934d57b91\",\n                \"quantity\": 8,\n                \"toOwnerId\": \"21111111-1111-4111-8111-111111111111\",\n                \"transactionType\": \"RETURN\",\n                \"updatedAt\": \"2026-01-02T18:32:26.203253\"\n            }\n        ],\n        \"empty\": false,\n        \"first\": true,\n        \"last\": true,\n        \"number\": 0,\n        \"numberOfElements\": 7,\n        \"pageable\": {\n            \"offset\": 0,\n            \"pageNumber\": 0,\n            \"pageSize\": 10,\n            \"paged\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"unpaged\": false\n        },\n        \"size\": 10,\n        \"sort\": {\n            \"empty\": true,\n            \"sorted\": false,\n            \"unsorted\": true\n        },\n        \"totalElements\": 7,\n        \"totalPages\": 1\n    }\n}"
 						}
 					]
 				},
 				{
 					"name": "Search Transaction",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -2923,7 +3024,7 @@
 					]
 				}
 			],
-			"description": "Digunakan untuk mencatat dan melacak seluruh transaksi yang terjadi pada item."
+			"description": "Digunakan untuk mencatat dan melacak seluruh transaksi yang terjadi pada item.\n\nDapat diakses oleh akun dengan User:\n\n- ADMIN\n    \n- STAFF\n    \n- AUDITOR (GET METHOD ONLY)"
 		},
 		{
 			"name": "Owner",
@@ -2931,6 +3032,16 @@
 				{
 					"name": "Get All Owner",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -3018,6 +3129,16 @@
 				{
 					"name": "Get Owner By Id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -3107,6 +3228,16 @@
 				{
 					"name": "Get Owner By CodeOwner",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -3198,6 +3329,16 @@
 				{
 					"name": "Get Active Owner",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -3287,6 +3428,16 @@
 				{
 					"name": "Create Owner",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -3392,6 +3543,16 @@
 				{
 					"name": "Update Owner",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -3499,6 +3660,16 @@
 				{
 					"name": "Update Activate Owner",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"url": {
@@ -3590,6 +3761,16 @@
 				{
 					"name": "Update Deactivate Owner",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RBRkYiLCJ1c2VySWQiOiI0ODY2MjM5Ni00NDU5LTRkM2YtODgxOS1hMzdlY2IzNmVmMWUiLCJlbWFpbCI6InJpemt5MkBpbnZlbnRvcnkuY29tIiwic3ViIjoiNDg2NjIzOTYtNDQ1OS00ZDNmLTg4MTktYTM3ZWNiMzZlZjFlIiwiaWF0IjoxNzY3MzU5NDUwLCJleHAiOjIxMjczNTk0NTB9.bVGBGRWwP3fVQErDsx36D86CsOtSNyKBY3jwM8d-EsQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"url": {
@@ -3679,7 +3860,7 @@
 					]
 				}
 			],
-			"description": "Digunakan untuk mengelola data owner atau pemilik item, yang dapat berupa divisi, individu, lokasi, maupun vendor."
+			"description": "Digunakan untuk mengelola data owner atau pemilik item, yang dapat berupa divisi, individu, lokasi, maupun vendor.\n\nDapat diakses oleh akun dengan User:\n\n- ADMIN\n    \n- STAFF\n    \n- AUDITOR (GET METHOD ONLY)"
 		}
 	],
 	"variable": [

@@ -1,6 +1,6 @@
 package com.task.inventory.mapper;
 
-import com.task.inventory.dto.item.ItemLoanRes;
+import com.task.inventory.dto.itemLoan.ItemLoanRes;
 import com.task.inventory.dto.item.TrackItemRes;
 import com.task.inventory.entity.ItemLoan;
 import com.task.inventory.entity.Items;
@@ -17,6 +17,7 @@ public class TrackItemMapper {
 
     private final ItemMapper itemMapper;
     private final ItemTransactionMapper itemTransactionMapper;
+    private final ItemLoanMapper itemLoanMapper;
 
     public TrackItemRes toTrackItemRes(
             Items item,
@@ -28,12 +29,12 @@ public class TrackItemMapper {
         res.setItemDataDetail(itemMapper.toItemRes(item));
         res.setItemLoanHistoryResList(
                 loanHistory.stream()
-                        .map(this::toItemLoanRes)
+                        .map(itemLoanMapper::toItemLoanRes)
                         .collect(Collectors.toList())
         );
         res.setActiveBorrowed(
                 activeBorrowed.stream()
-                        .map(this::toItemLoanRes)
+                        .map(itemLoanMapper::toItemLoanRes)
                         .collect(Collectors.toList())
         );
 
@@ -43,15 +44,6 @@ public class TrackItemMapper {
                         .collect(Collectors.toList())
         );
 
-        return res;
-    }
-    private ItemLoanRes toItemLoanRes(ItemLoan loan) {
-        ItemLoanRes res = new ItemLoanRes();
-        res.setLoanId(loan.getId());
-        res.setPerformedBy(loan.getBorrowerId());
-        res.setBorrowedAt(loan.getBorrowedAt());
-        res.setReturnedAt(loan.getReturnedAt());
-        res.setStatus(loan.getStatus());
         return res;
     }
 }

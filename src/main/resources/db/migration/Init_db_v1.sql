@@ -100,6 +100,7 @@ CREATE INDEX idx_item_transactions_performed_by ON item_transactions(performed_b
 CREATE INDEX idx_item_transactions_created_at ON item_transactions(created_at DESC);
 CREATE INDEX idx_item_transactions_composite ON item_transactions(item_id, created_at DESC);
 
+drop table item_loans;
 
 CREATE TABLE item_loans (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -107,18 +108,61 @@ CREATE TABLE item_loans (
     owner_id UUID NOT NULL,
     borrower_id UUID NOT NULL,
     quantity INTEGER NOT NULL,
-    borrowed_at TIMESTAMP NOT NULL,
+    borrowed_at TIMESTAMP NOT NULL DEFAULT NOW(),
     due_date TIMESTAMP NOT NULL,
     returned_at TIMESTAMP,
     status VARCHAR(50) NOT NULL CHECK (status IN ('BORROWED', 'RETURNED', 'OVERDUE')),
+    
+    borrow_transaction_id UUID,
+    return_transaction_id UUID,
 
     CONSTRAINT fk_item_loans_item FOREIGN KEY (item_id)
-        REFERENCES items(id) ON DELETE CASCADE
+        REFERENCES items(id) ON DELETE CASCADE,
+
+    CONSTRAINT fk_item_loans_owner FOREIGN KEY (owner_id)
+        REFERENCES owners(id),
+    
+    CONSTRAINT fk_item_loans_borrower FOREIGN KEY (borrower_id)
+        REFERENCES owners(id),
+
+    CONSTRAINT fk_item_loans_borrow_tx FOREIGN KEY (borrow_transaction_id)
+        REFERENCES item_transactions(id),
+        
+    CONSTRAINT fk_item_loans_return_tx FOREIGN KEY (return_transaction_id)
+        REFERENCES item_transactions(id)
 );
 
 CREATE INDEX idx_item_loans_item_id ON item_loans(item_id);
 CREATE INDEX idx_item_loans_owner_id ON item_loans(owner_id);
 CREATE INDEX idx_item_loans_borrower_id ON item_loans(borrower_id);
+CREATE INDEX idx_item_loans_status ON item_loans(status);
+CREATE INDEX idx_item_loans_item_id ON item_loans(item_id);
+CREATE INDEX idx_item_loans_borrow_tx_id ON item_loans(borrow_transaction_id);
+CREATE INDEX idx_item_loans_return_tx_id ON item_loans(return_transaction_id);
+CREATE INDEX idx_item_loans_owner_id ON item_loans(owner_id);
+CREATE INDEX idx_item_loans_borrower_id ON item_loans(borrower_id);
 CREATE INDEX idx_item_loans_borrowed_at ON item_loans(borrowed_at DESC);
 CREATE INDEX idx_item_loans_returned_at ON item_loans(returned_at) WHERE returned_at IS NOT NULL;
 
+CREATE TABLE item_logs (
+    id UUID NOT NULL,
+    item_id UUID NOT NULL,
+    transaction_id UUID,
+    performed_by_user_id UUID,
+    log_type VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    before_state TEXT,
+    after_state TEXT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT pk_item_logs PRIMARY KEY (id),
+    CONSTRAINT fk_item_logs_item FOREIGN KEY (item_id)
+        REFERENCES items(id) ON DELETE CASCADE,
+
+    CONSTRAINT fk_item_logs_transaction FOREIGN KEY (transaction_id)
+        REFERENCES item_transactions(id) ON DELETE SET NULL,
+
+    CONSTRAINT fk_item_logs_user FOREIGN KEY (performed_by_user_id)
+        REFERENCES users(id) ON DELETE SET NULL
+);
+CREATE INDEX idx_item_logs_item_id ON item_logs(item_id);

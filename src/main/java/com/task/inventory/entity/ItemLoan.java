@@ -20,11 +20,13 @@ public class ItemLoan {
     @ManyToOne
     private Items item;
 
-    @Column(nullable = false)
-    private UUID ownerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private Owners owner;
 
-    @Column(nullable = false)
-    private UUID borrowerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "borrower_id", nullable = false)
+    private Owners borrower;
 
     @Column(nullable = false)
     private Integer quantity;
@@ -36,6 +38,14 @@ public class ItemLoan {
     private LocalDateTime dueDate;
 
     private LocalDateTime returnedAt;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "borrow_transaction_id")
+    private ItemTransactions borrowTransaction;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "return_transaction_id")
+    private ItemTransactions returnTransaction;
 
     @Enumerated(EnumType.STRING)
     private LoanStatus status;

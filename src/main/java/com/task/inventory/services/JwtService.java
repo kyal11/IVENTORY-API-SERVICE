@@ -70,6 +70,10 @@ public class JwtService {
         return extractClaims(token).get("email", String.class);
     }
 
+    public String extractRole(String token) {
+        return extractClaims(token).get("role", String.class);
+    }
+
     public String extractUserId(String token) {
         return extractClaims(token).get("userId", String.class);
     }

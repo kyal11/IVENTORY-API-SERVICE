@@ -41,4 +41,13 @@ public class ItemMapper {
         res.setAvailableQuantity(stock.getAvailableQuantity());
         return res;
     }
+    public ItemRes toItemResWithStocks(Items item, List<ItemOwnerStocks> stocks) {
+        ItemRes res = toItemRes(item);
+        res.setItemOwnerStockResList(
+                stocks.stream()
+                        .map(this::toItemOwnerStockRes)
+                        .toList()
+        );
+        return res;
+    }
 }

@@ -1,5 +1,6 @@
 package com.task.inventory.services;
 
+import com.task.inventory.constant.ItemLogType;
 import com.task.inventory.constant.ItemStatus;
 import com.task.inventory.dto.ApiResponse;
 import com.task.inventory.dto.item.CreateItemReq;
@@ -19,8 +20,10 @@ import com.task.inventory.repository.ItemLoanRepository;
 import com.task.inventory.repository.ItemOwnerStocksRepository;
 import com.task.inventory.repository.ItemsRepository;
 import com.task.inventory.repository.ItemsTransactionsRepository;
+import com.task.inventory.security.SecurityUtils;
 import com.task.inventory.services.transaction.ItemTransactionService;
 import com.task.inventory.utils.ItemCodeGenerator;
+import com.task.inventory.utils.ObjectToJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +50,9 @@ public class ItemsService {
     private final ItemCodeGenerator itemCodeGenerator;
     private final ItemMapper mapper;
     private final TrackItemMapper trackItemMapper;
+
+    private final ObjectToJson objectToJson;
+    private final ItemLogsService itemLogsService;
 
     public ApiResponse<Page<ItemRes>> getAll(Pageable pageable) {
         Page<ItemRes> items = itemsRepository.findAll(pageable)
@@ -167,6 +173,16 @@ public class ItemsService {
             stock.setQuantity(assign.getQuantity());
             itemOwnerStocksRepository.save(stock);
         }
+        itemLogsService.log(
+                savedItem.getId(),
+                null,
+                ItemLogType.CREATE_ITEM,
+                "Create item",
+                null,
+                objectToJson.toJson(mapper.toItemRes(savedItem)),
+                SecurityUtils.getCurrentUserId()
+        );
+
         return ApiResponse.success(
                 "Create item successfully",
                 mapper.toItemRes(savedItem)
@@ -178,6 +194,8 @@ public class ItemsService {
         Items item = itemsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Item with ID " + id + " not found"));
 
+        String beforeState = objectToJson.toJson(mapper.toItemRes(item));
+
         item.setName(dto.getName());
         item.setDescription(dto.getDescription());
         item.setTotalQuantity(dto.getTotalQuantity());
@@ -185,12 +203,24 @@ public class ItemsService {
         item.setUpdatedAt(LocalDateTime.now());
 
         Items updated = itemsRepository.save(item);
+        itemLogsService.log(
+                updated.getId(),
+                null,
+                ItemLogType.UPDATE_ITEM,
+                "Update item",
+                beforeState,
+                objectToJson.toJson(mapper.toItemRes(updated)),
+                SecurityUtils.getCurrentUserId()
+        );
+
         return ApiResponse.success("Update item successfully", mapper.toItemRes(updated));
     }
 
     public void updateItemStatus(UUID itemId) {
         Items item = itemsRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item not found"));
+
+        String beforeState = objectToJson.toJson(mapper.toItemRes(item));
 
         Integer totalBorrowed = itemOwnerStocksRepository.getSumBorrowedQtyByItemId(itemId);
         if (totalBorrowed == null) totalBorrowed = 0;
@@ -201,6 +231,16 @@ public class ItemsService {
             item.setStatus(ItemStatus.AVAILABLE);
         }
 
-        itemsRepository.save(item);
+        Items updated = itemsRepository.save(item);
+
+        itemLogsService.log(
+                updated.getId(),
+                null,
+                ItemLogType.UPDATE_ITEM,
+                "Update item status based on borrowed quantity",
+                beforeState,
+                objectToJson.toJson(mapper.toItemRes(updated)),
+                SecurityUtils.getCurrentUserId()
+        );
     }
 }

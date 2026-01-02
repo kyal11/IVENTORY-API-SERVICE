@@ -10,7 +10,7 @@ Dokumentasi lengkap seluruh endpoint API dapat diakses melalui Postman Collectio
 
 ## 🚀 Fitur Utama
 
-- Manajemen User (Admin, Staff, Auditor, dll) -- Onprogres
+- Manajemen User (Admin, Staff, Auditor, dll)
 - Manajemen Item dan status ketersediaan
 - Manajemen Owner (Division, Person, Location, Vendor)
 - Transaksi Item:
@@ -24,7 +24,7 @@ Dokumentasi lengkap seluruh endpoint API dapat diakses melalui Postman Collectio
     - Riwayat seluruh transaksi
     - Transfer Kepemilikan barang
     - Assign barang ke sistem
-- Audit log transaksi item -- Onprogres
+- Audit log transaksi item
 - Autentikasi menggunakan JWT
 
 ---

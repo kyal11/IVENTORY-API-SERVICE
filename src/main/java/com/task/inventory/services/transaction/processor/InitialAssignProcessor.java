@@ -1,5 +1,6 @@
 package com.task.inventory.services.transaction.processor;
 
+import com.task.inventory.constant.ItemLogType;
 import com.task.inventory.constant.TransactionType;
 import com.task.inventory.dto.ApiResponse;
 import com.task.inventory.dto.item.ItemRes;
@@ -10,12 +11,15 @@ import com.task.inventory.entity.ItemTransactions;
 import com.task.inventory.entity.Users;
 import com.task.inventory.exception.BadRequestException;
 import com.task.inventory.exception.NotFoundException;
+import com.task.inventory.mapper.ItemMapper;
 import com.task.inventory.mapper.ItemTransactionMapper;
 import com.task.inventory.repository.ItemsRepository;
 import com.task.inventory.repository.ItemsTransactionsRepository;
 import com.task.inventory.repository.UsersRepository;
 import com.task.inventory.security.SecurityUtils;
+import com.task.inventory.services.ItemLogsService;
 import com.task.inventory.services.ItemsService;
+import com.task.inventory.utils.ObjectToJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -31,6 +35,10 @@ public class InitialAssignProcessor implements TransactionProcessor {
     private final ItemsRepository itemsRepository;
     private final ItemTransactionMapper mapper;
     private final UsersRepository usersRepository;
+
+    private final ItemMapper itemMapper;
+    private final ObjectToJson objectToJson;
+    private final ItemLogsService itemLogsService;
 
     @Override
     public TransactionType getType() {
@@ -65,6 +73,17 @@ public class InitialAssignProcessor implements TransactionProcessor {
         tx.setUpdatedAt(LocalDateTime.now());
 
         ItemTransactions savedTx = transactionsRepository.save(tx);
+
+        // Audit Item Log
+        itemLogsService.log(
+                itemEntity.getId(),
+                null,
+                ItemLogType.ASSIGN_ITEM,
+                "Transaction for assign item",
+               null,
+                objectToJson.toJson(itemMapper.toItemRes(itemEntity)),
+                SecurityUtils.getCurrentUserId()
+        );
         return mapper.toItemTransactionRes(savedTx);
     }
 }

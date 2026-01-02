@@ -56,4 +56,11 @@ public class ItemTransactions {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToOne(mappedBy = "borrowTransaction", fetch = FetchType.LAZY)
+    private ItemLoan borrowLoan;
+
+    @OneToOne(mappedBy = "returnTransaction", fetch = FetchType.LAZY)
+    private ItemLoan returnLoan;
+
 }

@@ -1,6 +1,7 @@
 package com.task.inventory.dto.itemTransaction;
 
 import com.task.inventory.constant.TransactionType;
+import com.task.inventory.dto.itemLoan.ItemLoanRes;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -27,5 +28,7 @@ public class ItemTransactionRes {
     private String notes;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private ItemLoanRes itemLoanDetail;
 }
 
